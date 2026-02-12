@@ -1,0 +1,30 @@
+<div *ngIf="options" class="fixed inset-0 z-[9999] flex items-center lg:items-start justify-center p-4 lg:pt-32">
+  <div #backdrop [@backdrop] class="absolute inset-0 bg-black/50 backdrop-blur-sm" (click)="onCancel()"></div>
+
+  <div #modal [@modal] class="relative bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+    <div class="p-6 sm:p-8 text-center">
+      <div class="mx-auto mb-4 sm:mb-5 w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center"
+        [ngClass]="getIconBg()">
+        <svg class="w-6 h-6 sm:w-7 sm:h-7" [ngClass]="getIconColor()" fill="none" viewBox="0 0 24 24" stroke-width="2"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="getIconPath()" />
+        </svg>
+      </div>
+
+      <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2">{{ options.title }}</h3>
+      <p class="text-sm text-gray-600 leading-relaxed max-w-sm mx-auto">{{ options.message }}</p>
+    </div>
+
+    <div class="flex border-t border-gray-200">
+      <button (click)="onCancel()"
+        class="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-sm font-medium text-gray-700 hover:bg-gray-50 active:bg-gray-100 transition-colors">
+        {{ options.cancelText }}
+      </button>
+      <div class="w-px bg-gray-200"></div>
+      <button (click)="onConfirm()" class="flex-1 px-4 sm:px-6 py-3 sm:py-4 text-sm font-semibold transition-colors"
+        [ngClass]="getConfirmBtnClass()">
+        {{ options.confirmText }}
+      </button>
+    </div>
+  </div>
+</div>

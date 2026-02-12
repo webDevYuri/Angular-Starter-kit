@@ -1,0 +1,6 @@
+export const environment = {
+  production: false,
+  apiUrl: 'https://staging-api.yourdomain.com/api',
+  appName: 'Angular Starter Kit',
+  version: '1.0.0'
+};

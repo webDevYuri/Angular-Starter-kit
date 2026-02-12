@@ -1,0 +1,11 @@
+:host {
+  display: contents;
+}
+
+code {
+  font-family: 'Courier New', monospace;
+}
+
+pre {
+  line-height: 1.5;
+}
