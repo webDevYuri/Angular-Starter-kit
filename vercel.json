@@ -1,0 +1,4 @@
+{
+  "buildCommand": "cp src/environments/environment.prod.ts.example src/environments/environment.prod.ts && npm run build",
+  "outputDirectory": "dist/Angular/browser"
+}
