@@ -1,5 +1,4 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { ToastService } from '../../core/services/toast.service';
 import { ConfirmService } from '../../core/services/confirm.service';
 import AOS from 'aos';
@@ -7,7 +6,7 @@ import AOS from 'aos';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -15,11 +14,17 @@ export class HomeComponent implements AfterViewInit {
   constructor(
     private toastService: ToastService,
     private confirmService: ConfirmService
-  ) { }
+  ) {}
 
   ngAfterViewInit() {
     setTimeout(() => {
-      AOS.refresh();
+      AOS.init({
+        duration: 600,
+        easing: 'ease-out',
+        once: true,
+        offset: 0,
+      });
+      AOS.refreshHard();
     }, 100);
   }
 

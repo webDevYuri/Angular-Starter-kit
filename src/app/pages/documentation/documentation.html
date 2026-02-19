@@ -1,38 +1,202 @@
-<div class="flex flex-1 min-h-0">
-  <aside class="hidden md:block w-64 bg-white border-r border-gray-200 overflow-y-auto">
-    <nav class="p-6 space-y-2">
-      <button *ngFor="let section of sections"
-              (click)="setActiveSection(section.id)"
-              [class.active]="activeSection === section.id"
-              class="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all text-left font-medium text-sm"
-              [ngClass]="activeSection === section.id ? 'bg-sky-50 text-sky-700' : 'text-gray-700 hover:bg-gray-50'">
-        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+<!-- Mobile sidebar backdrop -->
+<div
+  *ngIf="sidebarService.isOpen()"
+  (click)="sidebarService.close()"
+  class="fixed inset-0 z-30 bg-gray-900/40 backdrop-blur-sm md:hidden"
+></div>
+
+<!-- Mobile sidebar drawer (light) -->
+<aside
+  class="fixed top-0 left-0 z-40 h-full w-72 bg-white border-r border-gray-200 md:hidden flex flex-col shadow-xl"
+  [class.-translate-x-full]="!sidebarService.isOpen()"
+  [class.translate-x-0]="sidebarService.isOpen()"
+  [class.transition-transform]="ready"
+  [class.duration-300]="ready"
+  [class.ease-in-out]="ready"
+>
+  <!-- Drawer header -->
+  <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200">
+    <div class="flex items-center gap-2.5">
+      <div class="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
+        <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+        </svg>
+      </div>
+      <span class="text-sm font-semibold text-gray-900">Angular Starter Kit</span>
+    </div>
+    <button (click)="sidebarService.close()" class="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors">
+      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Drawer nav -->
+  <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+    <p class="text-[10px] font-semibold tracking-widest text-gray-400 uppercase px-3 mb-3">Documentation</p>
+    <button
+      *ngFor="let section of sections"
+      (click)="setActiveSection(section.id)"
+      class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-sm font-medium"
+      [ngClass]="activeSection === section.id
+        ? 'bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-sm'
+        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'"
+    >
+      <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="section.icon" />
+      </svg>
+      {{ section.label }}
+    </button>
+  </nav>
+
+  <!-- Drawer footer -->
+  <div class="px-4 py-4 border-t border-gray-200">
+    <a href="https://github.com/webDevYuri/Angular-Starter-kit" target="_blank"
+      class="flex items-center gap-2 text-xs text-gray-500 hover:text-gray-800 transition-colors">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+      </svg>
+      View on GitHub
+    </a>
+  </div>
+</aside>
+
+<!-- Main layout -->
+<div class="flex flex-1 min-h-0 bg-gray-50">
+
+  <!-- Desktop sidebar (light) -->
+  <aside class="hidden md:flex flex-col w-64 bg-white border-r border-gray-200 overflow-y-auto fixed top-16 bottom-0 left-0 z-20">
+    <!-- Logo -->
+    <div class="px-5 py-5 border-b border-gray-200">
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-purple-600 to-pink-500 flex items-center justify-center shadow-sm">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-sm font-semibold text-gray-900 leading-none">Angular Starter</p>
+          <p class="text-[10px] text-gray-400 mt-0.5">Documentation v1.0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="flex-1 px-3 py-5 space-y-1">
+      <p class="text-[10px] font-semibold tracking-widest text-gray-400 uppercase px-3 mb-3">Guides</p>
+      <button
+        *ngFor="let section of sections"
+        (click)="setActiveSection(section.id)"
+        class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-sm font-medium"
+        [ngClass]="activeSection === section.id
+          ? 'bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-sm'
+          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-transparent'"
+      >
+        <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="section.icon" />
         </svg>
         {{ section.label }}
       </button>
     </nav>
+
+    <!-- Sidebar footer -->
+    <div class="px-4 py-4 border-t border-gray-200">
+      <a href="https://github.com/webDevYuri/Angular-Starter-kit" target="_blank"
+        class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-gray-500 hover:text-gray-800 hover:bg-gray-50 transition-all">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
+        </svg>
+        GitHub Repository
+      </a>
+    </div>
   </aside>
 
-  <main class="flex-1 overflow-y-auto">
-    <div class="md:hidden sticky top-0 z-10 bg-white border-b border-gray-200 px-4 py-3">
-      <select [value]="activeSection" (change)="onMobileSelectChange($event)"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium focus:outline-none focus:ring-2 focus:ring-sky-500">
-        <option *ngFor="let section of sections" [value]="section.id">{{ section.label }}</option>
-      </select>
-    </div>
+  <!-- Content area -->
+  <main class="flex-1 overflow-y-auto md:ml-64">
 
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+    <div class="max-w-3xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
 
-      <section *ngIf="activeSection === 'folder'" class="space-y-6">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Folder Structure</h2>
-          <p class="text-gray-600">Understand how the project is organized</p>
+      <!-- ── GETTING STARTED ─────────────────────────────── -->
+      <section *ngIf="activeSection === 'getting-started'" class="space-y-8">
+        <div class="pb-6 border-b border-gray-200">
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase mb-3 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">Quick Start</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">Getting Started</h2>
+          <p class="text-gray-500 text-base">Set up this Angular starter kit and start building in minutes.</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8">
-          <p class="text-sm text-gray-600 mb-4">The project follows a feature-based architecture for better scalability and maintainability:</p>
-          <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto mb-6"><code>src/app/
+        <!-- Requirements -->
+        <div class="flex items-start gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-xs text-gray-700"><strong class="font-semibold">Requirements:</strong> Node.js 18+ and npm 9+ are required before proceeding.</p>
+        </div>
+
+        <!-- Installation -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Installation</h3>
+            <p class="text-sm text-gray-500 mt-0.5">Four steps to get your project running locally.</p>
+          </div>
+          <div class="px-6 py-5 space-y-7">
+            <div *ngFor="let step of installSteps; let i = index" class="space-y-2">
+              <div class="flex items-center gap-2.5">
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 text-white text-[11px] font-bold flex-shrink-0 shadow-sm">{{ getStepLabel(i) }}</span>
+                <p class="text-sm font-semibold text-gray-900">{{ step.title }}</p>
+              </div>
+              <p *ngIf="step.desc" class="text-xs text-gray-500 ml-8">{{ step.desc }}</p>
+              <pre class="bg-gray-900 text-gray-100 px-4 py-3 rounded-lg text-xs overflow-x-auto leading-relaxed ml-8"><code>{{ step.code }}</code></pre>
+              <p *ngIf="step.note" class="text-xs text-gray-500 ml-8">{{ step.note }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- npm scripts -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">npm Scripts</h3>
+          </div>
+          <div class="p-6 space-y-3">
+            <div *ngFor="let script of npmScripts" class="flex items-start gap-4">
+              <code class="text-xs font-mono px-2.5 py-1.5 rounded-lg border flex-shrink-0" [ngClass]="script.color">{{ script.cmd }}</code>
+              <p class="text-xs text-gray-600 pt-1.5">{{ script.desc }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next steps -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Next Steps</h3>
+          </div>
+          <div class="divide-y divide-gray-100">
+            <div *ngFor="let step of nextSteps; let i = index" class="flex gap-4 px-6 py-4">
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gradient-to-br from-purple-600 to-pink-500 text-white text-[11px] font-bold flex-shrink-0 mt-0.5 shadow-sm">{{ getStepLabel(i) }}</span>
+              <div>
+                <p class="text-sm font-semibold text-gray-900">{{ step.title }}</p>
+                <p class="text-xs text-gray-500 mt-0.5" [innerHTML]="step.desc"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FOLDER STRUCTURE ───────────────────────────── -->
+      <section *ngIf="activeSection === 'folder'" class="space-y-8">
+        <div class="pb-6 border-b border-gray-200">
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase mb-3 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">Architecture</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">Folder Structure</h2>
+          <p class="text-gray-500 text-base">Feature-based architecture for scalability and maintainability.</p>
+        </div>
+
+        <!-- Overview tree -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Project Overview</h3>
+            <p class="text-sm text-gray-500 mt-0.5">The full <code class="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-xs">src/app/</code> directory at a glance.</p>
+          </div>
+          <div class="p-6">
+            <pre class="bg-gray-900 text-gray-100 p-5 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>src/app/
 ├── core/               # Core functionality
 │   ├── data/          # API data sources
 │   ├── guards/        # Route guards
@@ -47,168 +211,143 @@
 ├── app.routes.ts      # Route definitions
 ├── app.ts             # Root component
 └── app.html           # Root template</code></pre>
+          </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <h3 class="text-lg font-semibold text-gray-900">core/</h3>
-          <p class="text-sm text-gray-600">Core contains application-wide singletons and logic that should only be instantiated once. Nothing in core should be imported by shared or feature modules directly.</p>
-
-          <div class="space-y-4">
-            <div class="border-l-4 border-blue-500 pl-4 space-y-2">
-              <h4 class="text-sm font-semibold text-gray-900">core/services/</h4>
-              <p class="text-xs text-gray-600">Singleton services provided at the root level. These handle global state, API communication, and cross-cutting concerns.</p>
-              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>core/services/
-├── toast.service.ts       # Global toast notifications
-├── confirm.service.ts     # Confirmation modal dialogs
-├── auth.service.ts        # Authentication & token management
-├── api.service.ts         # Base HTTP client wrapper
-└── storage.service.ts     # LocalStorage/SessionStorage helper</code></pre>
-            </div>
-
-            <div class="border-l-4 border-sky-500 pl-4 space-y-2">
-              <h4 class="text-sm font-semibold text-gray-900">core/data/</h4>
-              <p class="text-xs text-gray-600">Data sources that handle API calls for specific resources. Each file maps to a backend endpoint or resource.</p>
-              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>core/data/
-├── user.data.ts           # GET/POST/PUT /api/users
-├── product.data.ts        # GET/POST/PUT /api/products
-└── order.data.ts          # GET/POST /api/orders</code></pre>
-            </div>
-
-            <div class="border-l-4 border-amber-500 pl-4 space-y-2">
-              <h4 class="text-sm font-semibold text-gray-900">core/guards/</h4>
-              <p class="text-xs text-gray-600">Route guards that protect routes based on conditions like authentication status or user roles.</p>
-              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>core/guards/
-├── auth.guard.ts          # Redirect to login if not authenticated
-└── role.guard.ts          # Check user role before granting access</code></pre>
-            </div>
-
-            <div class="border-l-4 border-rose-500 pl-4 space-y-2">
-              <h4 class="text-sm font-semibold text-gray-900">core/interceptors/</h4>
-              <p class="text-xs text-gray-600">HTTP interceptors that modify requests/responses globally, like attaching auth tokens or handling errors.</p>
-              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>core/interceptors/
-├── auth.interceptor.ts    # Attach Bearer token to requests
-└── error.interceptor.ts   # Catch HTTP errors, show toast</code></pre>
-            </div>
-
-            <div class="border-l-4 border-purple-500 pl-4 space-y-2">
-              <h4 class="text-sm font-semibold text-gray-900">core/models/</h4>
-              <p class="text-xs text-gray-600">TypeScript interfaces and types that define the shape of your data across the app.</p>
-              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>core/models/
-├── user.model.ts          # interface User &#123; id, name, email &#125;
-├── product.model.ts       # interface Product &#123; id, title, price &#125;
-└── api-response.model.ts  # interface ApiResponse&lt;T&gt; &#123; data, message &#125;</code></pre>
-            </div>
-
-            <div class="border-l-4 border-teal-500 pl-4 space-y-2">
-              <h4 class="text-sm font-semibold text-gray-900">core/pipes/</h4>
-              <p class="text-xs text-gray-600">Custom Angular pipes for transforming data in templates.</p>
-              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>core/pipes/
-├── time-ago.pipe.ts       # "5 minutes ago" from a Date
-├── truncate.pipe.ts       # Shorten long text with "..."
-└── currency-ph.pipe.ts    # Format to Philippine Peso</code></pre>
+        <!-- core/ -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 border border-gray-200 text-xs font-mono font-semibold text-gray-700">core/</span>
+            <p class="text-sm text-gray-500">Application-wide singletons and logic.</p>
+          </div>
+          <div class="p-6 space-y-5">
+            <p class="text-sm text-gray-600">Contains application-wide singletons and logic that should only be instantiated once. Nothing in <code class="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-xs">core</code> should be imported by shared or feature modules directly.</p>
+            <div *ngFor="let sub of coreFolders" class="border-l-4 pl-4 space-y-2" [ngClass]="sub.accent">
+              <h4 class="text-sm font-semibold text-gray-900 font-mono">{{ sub.path }}</h4>
+              <p class="text-xs text-gray-600">{{ sub.desc }}</p>
+              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>{{ sub.code }}</code></pre>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <h3 class="text-lg font-semibold text-gray-900">layouts/</h3>
-          <p class="text-sm text-gray-600">Layout components wrap pages with shared UI elements like headers, sidebars, and footers. Pages are rendered inside the layout's <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">&lt;router-outlet /&gt;</code>.</p>
-
-          <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>layouts/
-├── main-layout/           # Header + content area (used by docs)
+        <!-- layouts/ -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 border border-gray-200 text-xs font-mono font-semibold text-gray-700">layouts/</span>
+            <p class="text-sm text-gray-500">Shared UI shells for pages.</p>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-sm text-gray-600">Layout components wrap pages with shared UI elements like headers, sidebars, and footers. Pages are rendered inside the layout's <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">&lt;router-outlet /&gt;</code>.</p>
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>layouts/
+├── main-layout/           # Header + content area
 │   ├── main-layout.ts
 │   ├── main-layout.html
 │   └── main-layout.css
-├── admin-layout/          # Sidebar + topbar for admin pages
-└── auth-layout/           # Centered card layout for login/register</code></pre>
-
-          <div class="bg-sky-50 border border-sky-200 rounded-lg p-4">
-            <p class="text-xs text-sky-900"><strong>Usage:</strong> Wrap child routes with a layout in <code class="bg-sky-100 px-1.5 py-0.5 rounded font-mono text-xs">app.routes.ts</code> by setting the layout as the parent component and pages as children.</p>
+├── admin-layout/          # Sidebar + topbar for admin
+└── auth-layout/           # Centered card layout for auth</code></pre>
+            <div class="flex items-start gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
+              <svg class="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+              </svg>
+              <p class="text-xs text-gray-700"><strong class="font-semibold">Usage:</strong> Wrap child routes with a layout in <code class="bg-gray-100 px-1.5 py-0.5 rounded font-mono text-xs">app.routes.ts</code> by setting the layout as the parent component and pages as children.</p>
+            </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <h3 class="text-lg font-semibold text-gray-900">pages/</h3>
-          <p class="text-sm text-gray-600">Page-level components that map directly to routes. Each page gets its own folder with its component, template, and styles.</p>
-
-          <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>pages/
+        <!-- pages/ -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100 flex items-center gap-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 border border-gray-200 text-xs font-mono font-semibold text-gray-700">pages/</span>
+            <p class="text-sm text-gray-500">Route-level components.</p>
+          </div>
+          <div class="p-6 space-y-4">
+            <p class="text-sm text-gray-600">Page-level components that map directly to routes. Each page gets its own folder with its component, template, and styles.</p>
+            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>pages/
 ├── home/                  # Landing page (/)
 │   ├── home.ts
 │   ├── home.html
 │   └── home.css
-├── documentation/         # Documentation page (/documentation)
-├── dashboard/             # Dashboard page (/dashboard)
-├── login/                 # Login page (/login)
+├── documentation/         # Documentation (/documentation)
+├── dashboard/             # Dashboard (/dashboard)
+├── login/                 # Login (/login)
 └── not-found/             # 404 page (/**)</code></pre>
-
-          <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <p class="text-xs text-amber-900"><strong>Convention:</strong> One page = one route. Keep pages thin &mdash; move complex UI blocks into <code class="bg-amber-100 px-1.5 py-0.5 rounded font-mono text-xs">sections/</code> and reusable pieces into <code class="bg-amber-100 px-1.5 py-0.5 rounded font-mono text-xs">shared/</code>.</p>
+            <div class="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+              <svg class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+              </svg>
+              <p class="text-xs text-amber-900"><strong class="font-semibold">Convention:</strong> One page = one route. Keep pages thin — move complex UI blocks into <code class="bg-amber-100 px-1.5 py-0.5 rounded font-mono text-xs">sections/</code> and reusable pieces into <code class="bg-amber-100 px-1.5 py-0.5 rounded font-mono text-xs">shared/</code>.</p>
+            </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <h3 class="text-lg font-semibold text-gray-900">sections/</h3>
-          <p class="text-sm text-gray-600">Larger UI blocks that are specific to a page or feature but too big to inline. Think of these as "page sections" &mdash; hero banners, feature grids, pricing tables, etc.</p>
-
-          <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>sections/
-├── hero-banner/           # Hero section for landing page
-├── feature-grid/          # Features showcase grid
-├── pricing-table/         # Pricing comparison table
-└── testimonials/          # Customer testimonials carousel</code></pre>
-
-          <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
-            <p class="text-xs text-purple-900"><strong>Sections vs Shared:</strong> Sections are larger, page-specific blocks. Shared components are smaller, generic pieces (buttons, modals, inputs) reused everywhere.</p>
+        <!-- sections/ + shared/ -->
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="px-5 py-4 border-b border-gray-100">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 border border-gray-200 text-xs font-mono font-semibold text-gray-700">sections/</span>
+              <p class="text-xs text-gray-500 mt-2">Larger page-specific UI blocks — hero banners, feature grids, pricing tables.</p>
+            </div>
+            <div class="p-5">
+              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>sections/
+├── hero-banner/
+├── feature-grid/
+├── pricing-table/
+└── testimonials/</code></pre>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div class="px-5 py-4 border-b border-gray-100">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-full bg-gray-100 border border-gray-200 text-xs font-mono font-semibold text-gray-700">shared/</span>
+              <p class="text-xs text-gray-500 mt-2">Small generic components reused across multiple pages.</p>
+            </div>
+            <div class="p-5">
+              <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>shared/
+├── toast/
+├── confirm-modal/
+├── loading-spinner/
+├── data-table/
+└── search-input/</code></pre>
+            </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <h3 class="text-lg font-semibold text-gray-900">shared/</h3>
-          <p class="text-sm text-gray-600">Small, reusable components and utilities used across multiple pages. These are generic and not tied to any specific feature.</p>
-
-          <pre class="bg-gray-900 text-gray-100 p-3 rounded-lg text-xs overflow-x-auto"><code>shared/
-├── toast/                 # Toast notification component
-│   ├── toast.ts
-│   ├── toast.html
-│   └── toast.css
-├── confirm-modal/         # Confirmation dialog component
-├── loading-spinner/       # Global loading indicator
-├── data-table/            # Reusable table with sorting/pagination
-└── search-input/          # Search input with debounce</code></pre>
+        <div class="flex items-start gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-xs text-gray-700"><strong class="font-semibold">Sections vs Shared:</strong> Sections are larger, page-specific blocks. Shared components are smaller, generic pieces (buttons, modals, inputs) reused everywhere.</p>
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'toast'" class="space-y-6">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Toast Notifications</h2>
-          <p class="text-gray-600">Simple, non-blocking alerts that appear at the top of the screen</p>
+      <!-- ── TOAST ──────────────────────────────────────── -->
+      <section *ngIf="activeSection === 'toast'" class="space-y-8">
+        <div class="pb-6 border-b border-gray-200">
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase mb-3 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">Service</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">Toast Notifications</h2>
+          <p class="text-gray-500 text-base">Simple, non-blocking alerts that appear at the top of the screen.</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Available Methods</h3>
-            <div class="space-y-3">
-              <div class="border-l-4 border-emerald-500 pl-4">
-                <code class="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-emerald-700">toastService.success(message)</code>
-                <p class="text-xs text-gray-600 mt-1">Display a success notification</p>
-              </div>
-              <div class="border-l-4 border-rose-500 pl-4">
-                <code class="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-rose-700">toastService.error(message)</code>
-                <p class="text-xs text-gray-600 mt-1">Display an error notification</p>
-              </div>
-              <div class="border-l-4 border-amber-500 pl-4">
-                <code class="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-amber-700">toastService.warning(message)</code>
-                <p class="text-xs text-gray-600 mt-1">Display a warning notification</p>
-              </div>
-              <div class="border-l-4 border-sky-500 pl-4">
-                <code class="text-sm font-mono bg-gray-100 px-2 py-1 rounded text-sky-700">toastService.info(message)</code>
-                <p class="text-xs text-gray-600 mt-1">Display an info notification</p>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Available Methods</h3>
+          </div>
+          <div class="p-6 space-y-3">
+            <div *ngFor="let method of toastMethods" class="flex items-start gap-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+              <span class="w-2 h-2 rounded-full flex-shrink-0 mt-2" [ngClass]="method.dot"></span>
+              <div class="flex-1 min-w-0">
+                <code class="text-xs font-mono px-2 py-1 rounded-lg border" [ngClass]="method.badge">{{ method.call }}</code>
+                <p class="text-xs text-gray-500 mt-1.5">{{ method.desc }}</p>
               </div>
             </div>
           </div>
+        </div>
 
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Example Usage</h3>
-            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto"><code>import &#123; ToastService &#125; from './core/services/toast.service';
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Example Usage</h3>
+          </div>
+          <div class="p-6">
+            <pre class="bg-gray-900 text-gray-100 p-5 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>import &#123; ToastService &#125; from './core/services/toast.service';
 
 export class MyComponent &#123;
   constructor(private toastService: ToastService) &#123;&#125;
@@ -222,50 +361,43 @@ export class MyComponent &#123;
   &#125;
 &#125;</code></pre>
           </div>
+        </div>
 
-          <div class="bg-sky-50 border border-sky-200 rounded-lg p-4">
-            <p class="text-xs text-sky-900"><strong>💡 Tip:</strong> Toasts automatically disappear after 3 seconds and are perfect for quick feedback after user actions.</p>
-          </div>
+        <div class="flex items-start gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-xs text-gray-700"><strong class="font-semibold">Tip:</strong> Toasts automatically disappear after 3 seconds and are perfect for quick feedback after user actions.</p>
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'confirm'" class="space-y-6">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Confirmation Modal</h2>
-          <p class="text-gray-600">Blocking dialogs for important user confirmations</p>
+      <!-- ── CONFIRM ─────────────────────────────────────── -->
+      <section *ngIf="activeSection === 'confirm'" class="space-y-8">
+        <div class="pb-6 border-b border-gray-200">
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase mb-3 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">Service</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">Confirmation Modal</h2>
+          <p class="text-gray-500 text-base">Blocking dialogs for important user confirmations.</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Modal Types</h3>
-            <div class="space-y-3">
-              <div class="flex items-start gap-3 pb-3 border-b border-gray-200">
-                <span class="inline-block w-3 h-3 rounded-full bg-rose-500 mt-1.5 flex-shrink-0"></span>
-                <div>
-                  <code class="text-sm font-mono text-rose-700 font-semibold">danger</code>
-                  <p class="text-xs text-gray-600 mt-1">Red colored, for destructive actions like delete</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3 pb-3 border-b border-gray-200">
-                <span class="inline-block w-3 h-3 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
-                <div>
-                  <code class="text-sm font-mono text-amber-700 font-semibold">warning</code>
-                  <p class="text-xs text-gray-600 mt-1">Amber colored, for important cautionary actions</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-3">
-                <span class="inline-block w-3 h-3 rounded-full bg-sky-500 mt-1.5 flex-shrink-0"></span>
-                <div>
-                  <code class="text-sm font-mono text-sky-700 font-semibold">info</code>
-                  <p class="text-xs text-gray-600 mt-1">Blue colored, for informational confirmations</p>
-                </div>
-              </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Modal Types</h3>
+          </div>
+          <div class="divide-y divide-gray-100">
+            <div *ngFor="let type of confirmTypes" class="flex items-center gap-4 px-6 py-4">
+              <span class="w-3 h-3 rounded-full flex-shrink-0" [ngClass]="type.dot"></span>
+              <code class="text-sm font-mono font-semibold" [ngClass]="type.textClass">{{ type.name }}</code>
+              <p class="text-xs text-gray-500">{{ type.desc }}</p>
             </div>
           </div>
+        </div>
 
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Example Usage</h3>
-            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto"><code>import &#123; ConfirmService &#125; from './core/services/confirm.service';
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Example Usage</h3>
+          </div>
+          <div class="p-6">
+            <pre class="bg-gray-900 text-gray-100 p-5 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>import &#123; ConfirmService &#125; from './core/services/confirm.service';
 
 export class MyComponent &#123;
   constructor(private confirmService: ConfirmService) &#123;&#125;
@@ -280,58 +412,47 @@ export class MyComponent &#123;
     &#125;);
 
     if (confirmed) &#123;
-      // User confirmed
+      // proceed with deletion
     &#125;
   &#125;
 &#125;</code></pre>
           </div>
+        </div>
 
-          <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
-            <p class="text-xs text-amber-900"><strong>⚠️ Note:</strong> The confirm() method returns a Promise that resolves to true if confirmed, false if cancelled.</p>
-          </div>
+        <div class="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-xs text-amber-900"><strong class="font-semibold">Note:</strong> The <code class="font-mono bg-amber-100 px-1 rounded">confirm()</code> method returns a Promise that resolves to <code class="font-mono bg-amber-100 px-1 rounded">true</code> if confirmed, <code class="font-mono bg-amber-100 px-1 rounded">false</code> if cancelled.</p>
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'aos'" class="space-y-6">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">AOS Animations</h2>
-          <p class="text-gray-600">Scroll-based animations using the Animate On Scroll library</p>
+      <!-- ── AOS ────────────────────────────────────────── -->
+      <section *ngIf="activeSection === 'aos'" class="space-y-8">
+        <div class="pb-6 border-b border-gray-200">
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase mb-3 bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">Library</span>
+          <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 tracking-tight mb-2">AOS Animations</h2>
+          <p class="text-gray-500 text-base">Scroll-triggered animations using the Animate On Scroll library.</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Available Animations</h3>
-            <div class="grid grid-cols-2 gap-3">
-              <div class="border border-gray-200 rounded-lg p-3">
-                <code class="text-xs font-mono text-indigo-700 bg-indigo-50 px-2 py-1 rounded">fade-up</code>
-                <p class="text-xs text-gray-600 mt-1.5">Fade in from below</p>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-3">
-                <code class="text-xs font-mono text-indigo-700 bg-indigo-50 px-2 py-1 rounded">fade-down</code>
-                <p class="text-xs text-gray-600 mt-1.5">Fade in from above</p>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-3">
-                <code class="text-xs font-mono text-indigo-700 bg-indigo-50 px-2 py-1 rounded">fade-left</code>
-                <p class="text-xs text-gray-600 mt-1.5">Fade in from right</p>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-3">
-                <code class="text-xs font-mono text-indigo-700 bg-indigo-50 px-2 py-1 rounded">fade-right</code>
-                <p class="text-xs text-gray-600 mt-1.5">Fade in from left</p>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-3">
-                <code class="text-xs font-mono text-indigo-700 bg-indigo-50 px-2 py-1 rounded">zoom-in</code>
-                <p class="text-xs text-gray-600 mt-1.5">Scale up into view</p>
-              </div>
-              <div class="border border-gray-200 rounded-lg p-3">
-                <code class="text-xs font-mono text-indigo-700 bg-indigo-50 px-2 py-1 rounded">flip-up</code>
-                <p class="text-xs text-gray-600 mt-1.5">Flip into view</p>
-              </div>
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Available Animations</h3>
+          </div>
+          <div class="p-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <div *ngFor="let anim of aosAnimations" class="border border-gray-200 rounded-xl p-3.5 hover:border-purple-200 hover:bg-purple-50/40 transition-colors">
+              <code class="text-xs font-mono text-purple-700 bg-purple-50 px-2 py-1 rounded-lg border border-purple-100">{{ anim.name }}</code>
+              <p class="text-xs text-gray-500 mt-2">{{ anim.desc }}</p>
             </div>
           </div>
+        </div>
 
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Usage in Templates</h3>
-            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto"><code>&lt;div data-aos="fade-up"&gt;
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Usage in Templates</h3>
+          </div>
+          <div class="p-6">
+            <pre class="bg-gray-900 text-gray-100 p-5 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>&lt;div data-aos="fade-up"&gt;
   Animates on scroll
 &lt;/div&gt;
 
@@ -345,84 +466,47 @@ export class MyComponent &#123;
   Slower animation
 &lt;/div&gt;</code></pre>
           </div>
+        </div>
 
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Global Configuration</h3>
-            <p class="text-sm text-gray-600 mb-3">AOS is initialized in <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">app.ts</code> with these defaults:</p>
-            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto"><code>import AOS from 'aos';
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Global Configuration</h3>
+            <p class="text-sm text-gray-500 mt-0.5">Initialized in <code class="bg-gray-100 px-1.5 py-0.5 rounded font-mono text-xs">app.ts</code> with these defaults.</p>
+          </div>
+          <div class="p-6">
+            <pre class="bg-gray-900 text-gray-100 p-5 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>import AOS from 'aos';
 
 AOS.init(&#123;
-  duration: 600,    // Animation duration in ms
+  duration: 600,      // Animation duration in ms
   easing: 'ease-out', // Easing function
-  once: true        // Animate only once
+  once: true          // Animate only once per element
 &#125;);</code></pre>
           </div>
+        </div>
 
-          <div>
-            <h3 class="text-lg font-semibold text-gray-900 mb-4">Dynamic Content</h3>
-            <p class="text-sm text-gray-600 mb-3">When elements are added/removed dynamically (e.g. with <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">*ngIf</code>), call <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">AOS.refresh()</code> to detect new elements:</p>
-            <pre class="bg-gray-900 text-gray-100 p-4 rounded-lg text-xs overflow-x-auto"><code>import AOS from 'aos';
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+          <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-base font-semibold text-gray-900">Dynamic Content</h3>
+            <p class="text-sm text-gray-500 mt-0.5">Refreshing AOS after <code class="bg-gray-100 px-1.5 py-0.5 rounded font-mono text-xs">*ngIf</code> toggles.</p>
+          </div>
+          <div class="p-6">
+            <pre class="bg-gray-900 text-gray-100 p-5 rounded-lg text-xs overflow-x-auto leading-relaxed"><code>import AOS from 'aos';
 
 toggleContent() &#123;
   this.showContent = !this.showContent;
   setTimeout(() =&gt; AOS.refresh(), 50);
 &#125;</code></pre>
           </div>
-
-          <div class="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-            <p class="text-xs text-indigo-900"><strong>💡 Tip:</strong> Use staggered <code class="bg-indigo-100 px-1.5 py-0.5 rounded font-mono text-xs">data-aos-delay</code> values (e.g. 100, 200, 300) on sibling elements to create a cascading entrance effect.</p>
-          </div>
-        </div>
-      </section>
-
-      <section *ngIf="activeSection === 'getting-started'" class="space-y-6">
-        <div>
-          <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Getting Started</h2>
-          <p class="text-gray-600">Quick steps to start developing with this template</p>
         </div>
 
-        <div class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 space-y-6">
-          <ol class="space-y-4">
-            <li class="flex gap-4">
-              <span class="flex-shrink-0 w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
-              <div>
-                <p class="font-semibold text-gray-900">Create page components</p>
-                <p class="text-xs sm:text-sm text-gray-600 mt-1">Use the <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">pages/</code> folder to create your page components</p>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="flex-shrink-0 w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
-              <div>
-                <p class="font-semibold text-gray-900">Define routes</p>
-                <p class="text-xs sm:text-sm text-gray-600 mt-1">Add your routes to <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">app.routes.ts</code></p>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="flex-shrink-0 w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
-              <div>
-                <p class="font-semibold text-gray-900">Create services</p>
-                <p class="text-xs sm:text-sm text-gray-600 mt-1">Add business logic services to <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">core/services/</code></p>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="flex-shrink-0 w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
-              <div>
-                <p class="font-semibold text-gray-900">Use Toast & Confirm</p>
-                <p class="text-xs sm:text-sm text-gray-600 mt-1">Inject ToastService and ConfirmService for user feedback</p>
-              </div>
-            </li>
-            <li class="flex gap-4">
-              <span class="flex-shrink-0 w-8 h-8 bg-sky-500 text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
-              <div>
-                <p class="font-semibold text-gray-900">Create shared components</p>
-                <p class="text-xs sm:text-sm text-gray-600 mt-1">Place reusable components in <code class="bg-gray-100 px-2 py-1 rounded font-mono text-xs">shared/</code></p>
-              </div>
-            </li>
-          </ol>
+        <div class="flex items-start gap-3 bg-gray-50 border border-gray-200 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-xs text-gray-700"><strong class="font-semibold">Tip:</strong> Use staggered <code class="bg-gray-100 px-1.5 py-0.5 rounded font-mono text-xs">data-aos-delay</code> values (100, 200, 300) on sibling elements to create a cascading entrance effect.</p>
         </div>
       </section>
 
     </div>
   </main>
-
 </div>

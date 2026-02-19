@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ToastComponent } from './shared/toast/toast';
 import { ConfirmModalComponent } from './shared/confirm-modal/confirm-modal';
-import AOS from 'aos';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +9,4 @@ import AOS from 'aos';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
-  ngOnInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-out',
-      once: true,
-      offset: 0
-    });
-  }
-}
+export class App {}

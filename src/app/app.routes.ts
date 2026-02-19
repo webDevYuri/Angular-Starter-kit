@@ -6,13 +6,13 @@ import { DocumentationComponent } from './pages/documentation/documentation';
 export const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
-    pathMatch: 'full'
-  },
-  {
-    path: '',
     component: MainLayoutComponent,
     children: [
+      {
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full'
+      },
       {
         path: 'documentation',
         component: DocumentationComponent
