@@ -72,12 +72,18 @@ npm run build
 ```
 src/app/
 ├── core/                  # Core functionality (singletons)
+│   ├── constants/        # App-wide constants & config
 │   ├── data/             # API data sources
+│   ├── directives/       # Custom attribute directives
+│   ├── enums/            # Named constant sets
 │   ├── guards/           # Route guards
 │   ├── interceptors/     # HTTP interceptors
-│   ├── models/           # TypeScript interfaces & types
+│   ├── interfaces/       # TypeScript interfaces
+│   ├── models/           # Classes with behavior
 │   ├── pipes/            # Custom pipes
-│   └── services/         # Singleton services (toast, confirm, etc.)
+│   ├── services/         # Singleton services (toast, confirm, etc.)
+│   ├── utils/            # Pure helper functions
+│   └── validators/       # Custom form validators
 ├── layouts/              # Layout components (header + router-outlet)
 ├── pages/                # Page-level components (one per route)
 ├── sections/             # Large reusable page sections
