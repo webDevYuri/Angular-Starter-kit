@@ -1,41 +1,41 @@
 <div class="flex flex-col min-h-screen bg-white relative overflow-x-hidden">
   <div class="fixed inset-0 z-0 pointer-events-none grid-bg"></div>
 
-  <header class="bg-white/80 backdrop-blur-md border-b border-black/8 fixed top-0 left-0 right-0 z-40">
+  <header class="bg-white/80 backdrop-blur-md border-b border-zinc-900/8 fixed top-0 left-0 right-0 z-40">
     <div class="px-6 sm:px-8 py-4 flex items-center justify-between max-w-screen-2xl mx-auto">
 
       <div class="flex items-center gap-3">
         @if (isDocumentation) {
         <button (click)="sidebarService.toggle()"
-          class="p-2 rounded-lg border border-black/10 text-black/60 hover:bg-black hover:text-white transition-all duration-200 md:hidden"
+          class="p-2 rounded-lg border border-zinc-900/10 text-zinc-900/60 hover:bg-zinc-900 hover:text-white transition-all duration-200 md:hidden"
           aria-label="Toggle menu">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
         </button>
         <a routerLink="/" class="hidden md:flex items-center gap-0 no-underline select-none logo-tag">
-          <span class="text-black/25 font-mono text-xl font-light">&lt;</span>
-          <span class="font-black tracking-tight text-black text-xl px-1">DevYuri</span>
-          <span class="text-black/25 font-mono text-xl font-light">/&gt;</span>
+          <span class="text-zinc-900/25 font-mono text-xl font-light">&lt;</span>
+          <span class="font-black tracking-tight text-zinc-900 text-xl px-1">DevYuri</span>
+          <span class="text-zinc-900/25 font-mono text-xl font-light">/&gt;</span>
         </a>
         }
 
         @if (!isDocumentation) {
         <a routerLink="/" class="flex items-center gap-0 no-underline select-none logo-tag">
-          <span class="text-black/25 font-mono text-xl font-light">&lt;</span>
-          <span class="font-black tracking-tight text-black text-xl px-1">DevYuri</span>
-          <span class="text-black/25 font-mono text-xl font-light">/&gt;</span>
+          <span class="text-zinc-900/25 font-mono text-xl font-light">&lt;</span>
+          <span class="font-black tracking-tight text-zinc-900 text-xl px-1">DevYuri</span>
+          <span class="text-zinc-900/25 font-mono text-xl font-light">/&gt;</span>
         </a>
         }
       </div>
 
-      <nav class="flex items-center bg-black/5 rounded-xl p-0.5 sm:p-1 gap-0">
+      <nav class="flex items-center bg-zinc-900/5 rounded-xl p-0.5 sm:p-1 gap-0">
         <a routerLink="/" routerLinkActive="tab-active" [routerLinkActiveOptions]="{ exact: true }"
-          class="tab-link px-3 sm:px-5 py-1 sm:py-1.5 text-xs sm:text-sm font-medium text-black/50 rounded-lg transition-all duration-200 hover:text-black">
+          class="tab-link px-3 sm:px-5 py-1 sm:py-1.5 text-xs sm:text-sm font-medium text-zinc-900/50 rounded-lg transition-all duration-200 hover:text-zinc-900">
           Home
         </a>
         <a routerLink="/documentation" routerLinkActive="tab-active"
-          class="tab-link px-3 sm:px-5 py-1 sm:py-1.5 text-xs sm:text-sm font-medium text-black/50 rounded-lg transition-all duration-200 hover:text-black">
+          class="tab-link px-3 sm:px-5 py-1 sm:py-1.5 text-xs sm:text-sm font-medium text-zinc-900/50 rounded-lg transition-all duration-200 hover:text-zinc-900">
           Documentation
         </a>
       </nav>

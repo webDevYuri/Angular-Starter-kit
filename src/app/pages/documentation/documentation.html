@@ -1,24 +1,24 @@
 <div
   *ngIf="sidebarService.isOpen()"
   (click)="sidebarService.close()"
-  class="fixed inset-0 z-50 bg-black/20 backdrop-blur-sm md:hidden"
+  class="fixed inset-0 z-50 bg-zinc-900/20 backdrop-blur-sm md:hidden"
 ></div>
 
 <aside
-  class="fixed top-0 left-0 z-50 h-full w-72 bg-white border-r border-black/8 md:hidden flex flex-col"
+  class="fixed top-0 left-0 z-50 h-full w-72 bg-white border-r border-zinc-900/8 md:hidden flex flex-col"
   [class.-translate-x-full]="!sidebarService.isOpen()"
   [class.translate-x-0]="sidebarService.isOpen()"
   [class.transition-transform]="ready"
   [class.duration-300]="ready"
   [class.ease-in-out]="ready"
 >
-  <div class="flex items-center justify-between px-5 py-4 border-b border-black/8">
+  <div class="flex items-center justify-between px-5 py-4 border-b border-zinc-900/8">
     <div class="flex items-center gap-0 select-none">
-      <span class="text-black/25 font-mono text-base font-light">&lt;</span>
-      <span class="font-black tracking-tight text-black text-base px-0.5">DevYuri</span>
-      <span class="text-black/25 font-mono text-base font-light">/&gt;</span>
+      <span class="text-zinc-900/25 font-mono text-base font-light">&lt;</span>
+      <span class="font-black tracking-tight text-zinc-900 text-base px-0.5">DevYuri</span>
+      <span class="text-zinc-900/25 font-mono text-base font-light">/&gt;</span>
     </div>
-    <button (click)="sidebarService.close()" class="p-1.5 rounded-lg text-black/40 hover:text-black hover:bg-black/5 transition-colors">
+    <button (click)="sidebarService.close()" class="p-1.5 rounded-lg text-zinc-900/40 hover:text-zinc-900 hover:bg-zinc-900/5 transition-colors">
       <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
       </svg>
@@ -26,14 +26,14 @@
   </div>
 
   <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-    <p class="text-[10px] font-semibold tracking-widest text-black/30 uppercase px-3 mb-3">Documentation</p>
+    <p class="text-[10px] font-semibold tracking-widest text-zinc-900/30 uppercase px-3 mb-3">Documentation</p>
     <button
       *ngFor="let section of sections"
       (click)="setActiveSection(section.id)"
       class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-sm font-medium"
       [ngClass]="activeSection === section.id
-        ? 'bg-black text-white'
-        : 'text-black/50 hover:text-black hover:bg-black/5'"
+        ? 'bg-zinc-900 text-white'
+        : 'text-zinc-900/50 hover:text-zinc-900 hover:bg-zinc-900/5'"
     >
       <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="section.icon" />
@@ -42,9 +42,9 @@
     </button>
   </nav>
 
-  <div class="px-4 py-4 border-t border-black/8">
+  <div class="px-4 py-4 border-t border-zinc-900/8">
     <a href="https://github.com/webDevYuri/Angular-Starter-kit" target="_blank"
-      class="flex items-center gap-2 text-xs text-black/40 hover:text-black transition-colors">
+      class="flex items-center gap-2 text-xs text-zinc-900/40 hover:text-zinc-900 transition-colors">
       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
         <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
       </svg>
@@ -55,32 +55,32 @@
 
 <div class="flex flex-1 min-h-0">
 
-  <aside class="hidden md:flex flex-col w-64 bg-white border-r border-black/8 overflow-y-auto fixed top-[73px] bottom-0 left-0 z-20">
+  <aside class="hidden md:flex flex-col w-64 bg-white border-r border-zinc-900/8 overflow-y-auto fixed top-[73px] bottom-0 left-0 z-20">
 
-    <div class="px-5 py-5 border-b border-black/8">
+    <div class="px-5 py-5 border-b border-zinc-900/8">
       <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-xl bg-black flex items-center justify-center flex-shrink-0">
+        <div class="w-8 h-8 rounded-xl bg-zinc-900 flex items-center justify-center flex-shrink-0">
           <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
           </svg>
         </div>
         <div>
-          <p class="text-sm font-semibold text-black leading-none">Angular Starter</p>
-          <p class="text-[10px] text-black/35 mt-0.5">Documentation v1.0</p>
+          <p class="text-sm font-semibold text-zinc-900 leading-none">Angular Starter</p>
+          <p class="text-[10px] text-zinc-900/35 mt-0.5">Documentation v1.0</p>
         </div>
       </div>
     </div>
 
     <div class="px-4 py-4 flex-1">
-      <p class="text-[10px] font-semibold tracking-widest text-black/30 uppercase px-2 mb-3">Navigation</p>
+      <p class="text-[10px] font-semibold tracking-widest text-zinc-900/30 uppercase px-2 mb-3">Navigation</p>
       <nav class="space-y-0.5">
         <button
           *ngFor="let section of sections"
           (click)="setActiveSection(section.id)"
           class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-sm font-medium"
           [ngClass]="activeSection === section.id
-            ? 'bg-black text-white'
-            : 'text-black/50 hover:text-black hover:bg-black/5'"
+            ? 'bg-zinc-900 text-white'
+            : 'text-zinc-900/50 hover:text-zinc-900 hover:bg-zinc-900/5'"
         >
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="section.icon" />
@@ -90,9 +90,9 @@
       </nav>
     </div>
 
-    <div class="px-4 py-4 border-t border-black/8">
+    <div class="px-4 py-4 border-t border-zinc-900/8">
       <a href="https://github.com/webDevYuri/Angular-Starter-kit" target="_blank"
-        class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-black/40 hover:text-black hover:bg-black/5 transition-all">
+        class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-zinc-900/40 hover:text-zinc-900 hover:bg-zinc-900/5 transition-all">
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
           <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2Z"/>
         </svg>
@@ -105,59 +105,59 @@
     <div class="max-w-3xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
 
       <section *ngIf="activeSection === 'getting-started'" class="space-y-8">
-        <div class="pb-6 border-b border-black/8">
-          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-black/30">Quick Start</span>
-          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-black mb-2">Getting Started</h2>
-          <p class="text-black/50 text-base">Set up this Angular starter kit and start building in minutes.</p>
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Quick Start</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Getting Started</h2>
+          <p class="text-zinc-900/50 text-base">Set up this Angular starter kit and start building in minutes.</p>
         </div>
 
-        <div class="flex items-start gap-3 bg-black/[0.03] border border-black/8 rounded-xl px-4 py-3.5">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-black/40 flex-shrink-0 mt-0.5">
+        <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3.5">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
           </svg>
-          <p class="text-xs text-black/60"><strong class="font-semibold text-black">Requirements:</strong> Node.js 18+ and npm 9+ are required before proceeding.</p>
+          <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Requirements:</strong> Node.js 18+ and npm 9+ are required before proceeding.</p>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Installation</h3>
-            <p class="text-sm text-black/40 mt-0.5">Four steps to get your project running locally.</p>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Installation</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Four steps to get your project running locally.</p>
           </div>
           <div class="px-6 py-5 space-y-7">
             <div *ngFor="let step of installSteps; let i = index" class="space-y-2">
               <div class="flex items-center gap-2.5">
-                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-black text-white text-[11px] font-bold flex-shrink-0">{{ getStepLabel(i) }}</span>
-                <p class="text-sm font-semibold text-black">{{ step.title }}</p>
+                <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-900 text-white text-[11px] font-bold flex-shrink-0">{{ getStepLabel(i) }}</span>
+                <p class="text-sm font-semibold text-zinc-900">{{ step.title }}</p>
               </div>
-              <p *ngIf="step.desc" class="text-xs text-black/40 ml-8">{{ step.desc }}</p>
-              <pre class="bg-black text-white/80 px-4 py-3 rounded-xl text-xs overflow-x-auto leading-relaxed ml-8"><code>{{ step.code }}</code></pre>
-              <p *ngIf="step.note" class="text-xs text-black/40 ml-8">{{ step.note }}</p>
+              <p *ngIf="step.desc" class="text-xs text-zinc-900/40 ml-8">{{ step.desc }}</p>
+              <pre class="bg-zinc-900 text-white/80 px-4 py-3 rounded-xl text-xs overflow-x-auto leading-relaxed ml-8"><code>{{ step.code }}</code></pre>
+              <p *ngIf="step.note" class="text-xs text-zinc-900/40 ml-8">{{ step.note }}</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">npm Scripts</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">npm Scripts</h3>
           </div>
           <div class="p-6 space-y-3">
             <div *ngFor="let script of npmScripts" class="flex items-start gap-4">
-              <code class="text-xs font-mono px-2.5 py-1.5 rounded-lg border border-black/10 bg-black/[0.03] text-black flex-shrink-0">{{ script.cmd }}</code>
-              <p class="text-xs text-black/50 pt-1.5">{{ script.desc }}</p>
+              <code class="text-xs font-mono px-2.5 py-1.5 rounded-lg border border-zinc-900/10 bg-zinc-900/[0.03] text-zinc-900 flex-shrink-0">{{ script.cmd }}</code>
+              <p class="text-xs text-zinc-900/50 pt-1.5">{{ script.desc }}</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Next Steps</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Next Steps</h3>
           </div>
-          <div class="divide-y divide-black/5">
+          <div class="divide-y divide-zinc-900/5">
             <div *ngFor="let step of nextSteps; let i = index" class="flex gap-4 px-6 py-4">
-              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-black text-white text-[11px] font-bold flex-shrink-0 mt-0.5">{{ getStepLabel(i) }}</span>
+              <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-900 text-white text-[11px] font-bold flex-shrink-0 mt-0.5">{{ getStepLabel(i) }}</span>
               <div>
-                <p class="text-sm font-semibold text-black">{{ step.title }}</p>
-                <p class="text-xs text-black/50 mt-0.5" [innerHTML]="step.desc"></p>
+                <p class="text-sm font-semibold text-zinc-900">{{ step.title }}</p>
+                <p class="text-xs text-zinc-900/50 mt-0.5" [innerHTML]="step.desc"></p>
               </div>
             </div>
           </div>
@@ -165,19 +165,19 @@
       </section>
 
       <section *ngIf="activeSection === 'folder'" class="space-y-8">
-        <div class="pb-6 border-b border-black/8">
-          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-black/30">Architecture</span>
-          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-black mb-2">Folder Structure</h2>
-          <p class="text-black/50 text-base">Feature-based architecture for scalability and maintainability.</p>
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Architecture</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Folder Structure</h2>
+          <p class="text-zinc-900/50 text-base">Feature-based architecture for scalability and maintainability.</p>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Project Overview</h3>
-            <p class="text-sm text-black/40 mt-0.5">The full <code class="font-mono bg-black/5 px-1.5 py-0.5 rounded text-xs">src/app/</code> directory at a glance.</p>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Project Overview</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">The full <code class="font-mono bg-zinc-900/5 px-1.5 py-0.5 rounded text-xs">src/app/</code> directory at a glance.</p>
           </div>
           <div class="p-6">
-            <pre class="bg-black text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>src/app/
+            <pre class="bg-zinc-900 text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>src/app/
 ├── core/               # Core functionality
 │   ├── data/          # API data sources
 │   ├── guards/        # Route guards
@@ -195,52 +195,52 @@
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8 flex items-center gap-3">
-            <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-black/5 border border-black/8 text-xs font-mono font-semibold text-black">core/</span>
-            <p class="text-sm text-black/40">Application-wide singletons and logic.</p>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8 flex items-center gap-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-zinc-900/5 border border-zinc-900/8 text-xs font-mono font-semibold text-zinc-900">core/</span>
+            <p class="text-sm text-zinc-900/40">Application-wide singletons and logic.</p>
           </div>
           <div class="p-6 space-y-5">
-            <p class="text-sm text-black/60">Contains application-wide singletons and logic that should only be instantiated once. Nothing in <code class="font-mono bg-black/5 px-1.5 py-0.5 rounded text-xs">core</code> should be imported by shared or feature modules directly.</p>
-            <div *ngFor="let sub of coreFolders" class="border-l-2 border-black/15 pl-4 space-y-2">
-              <h4 class="text-sm font-semibold text-black font-mono">{{ sub.path }}</h4>
-              <p class="text-xs text-black/50">{{ sub.desc }}</p>
-              <pre class="bg-black text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ sub.code }}</code></pre>
+            <p class="text-sm text-zinc-900/60">Contains application-wide singletons and logic that should only be instantiated once. Nothing in <code class="font-mono bg-zinc-900/5 px-1.5 py-0.5 rounded text-xs">core</code> should be imported by shared or feature modules directly.</p>
+            <div *ngFor="let sub of coreFolders" class="border-l-2 border-zinc-900/15 pl-4 space-y-2">
+              <h4 class="text-sm font-semibold text-zinc-900 font-mono">{{ sub.path }}</h4>
+              <p class="text-xs text-zinc-900/50">{{ sub.desc }}</p>
+              <pre class="bg-zinc-900 text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ sub.code }}</code></pre>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8 flex items-center gap-3">
-            <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-black/5 border border-black/8 text-xs font-mono font-semibold text-black">layouts/</span>
-            <p class="text-sm text-black/40">Shared UI shells for pages.</p>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8 flex items-center gap-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-zinc-900/5 border border-zinc-900/8 text-xs font-mono font-semibold text-zinc-900">layouts/</span>
+            <p class="text-sm text-zinc-900/40">Shared UI shells for pages.</p>
           </div>
           <div class="p-6 space-y-4">
-            <p class="text-sm text-black/60">Layout components wrap pages with shared UI elements like headers, sidebars, and footers. Pages are rendered inside the layout's <code class="bg-black/5 px-2 py-1 rounded font-mono text-xs">&lt;router-outlet /&gt;</code>.</p>
-            <pre class="bg-black text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>layouts/
+            <p class="text-sm text-zinc-900/60">Layout components wrap pages with shared UI elements like headers, sidebars, and footers. Pages are rendered inside the layout's <code class="bg-zinc-900/5 px-2 py-1 rounded font-mono text-xs">&lt;router-outlet /&gt;</code>.</p>
+            <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>layouts/
 ├── main-layout/           # Header + content area
 │   ├── main-layout.ts
 │   ├── main-layout.html
 │   └── main-layout.css
 ├── admin-layout/          # Sidebar + topbar for admin
 └── auth-layout/           # Centered card layout for auth</code></pre>
-            <div class="flex items-start gap-3 bg-black/[0.03] border border-black/8 rounded-xl px-4 py-3">
-              <svg class="w-4 h-4 text-black/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3">
+              <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
               </svg>
-              <p class="text-xs text-black/60"><strong class="font-semibold text-black">Usage:</strong> Wrap child routes with a layout in <code class="bg-black/5 px-1.5 py-0.5 rounded font-mono text-xs">app.routes.ts</code> by setting the layout as the parent component and pages as children.</p>
+              <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Usage:</strong> Wrap child routes with a layout in <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">app.routes.ts</code> by setting the layout as the parent component and pages as children.</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8 flex items-center gap-3">
-            <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-black/5 border border-black/8 text-xs font-mono font-semibold text-black">pages/</span>
-            <p class="text-sm text-black/40">Route-level components.</p>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8 flex items-center gap-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-zinc-900/5 border border-zinc-900/8 text-xs font-mono font-semibold text-zinc-900">pages/</span>
+            <p class="text-sm text-zinc-900/40">Route-level components.</p>
           </div>
           <div class="p-6 space-y-4">
-            <p class="text-sm text-black/60">Page-level components that map directly to routes. Each page gets its own folder with its component, template, and styles.</p>
-            <pre class="bg-black text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>pages/
+            <p class="text-sm text-zinc-900/60">Page-level components that map directly to routes. Each page gets its own folder with its component, template, and styles.</p>
+            <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>pages/
 ├── home/                  # Landing page (/)
 │   ├── home.ts
 │   ├── home.html
@@ -249,36 +249,36 @@
 ├── dashboard/             # Dashboard (/dashboard)
 ├── login/                 # Login (/login)
 └── not-found/             # 404 page (/**)</code></pre>
-            <div class="flex items-start gap-3 bg-black/[0.03] border border-black/8 rounded-xl px-4 py-3">
-              <svg class="w-4 h-4 text-black/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3">
+              <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
               </svg>
-              <p class="text-xs text-black/60"><strong class="font-semibold text-black">Convention:</strong> One page = one route. Keep pages thin — move complex UI blocks into <code class="bg-black/5 px-1.5 py-0.5 rounded font-mono text-xs">sections/</code> and reusable pieces into <code class="bg-black/5 px-1.5 py-0.5 rounded font-mono text-xs">shared/</code>.</p>
+              <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Convention:</strong> One page = one route. Keep pages thin — move complex UI blocks into <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">sections/</code> and reusable pieces into <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">shared/</code>.</p>
             </div>
           </div>
         </div>
 
         <div class="grid sm:grid-cols-2 gap-5">
-          <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-            <div class="px-5 py-4 border-b border-black/8">
-              <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-black/5 border border-black/8 text-xs font-mono font-semibold text-black">sections/</span>
-              <p class="text-xs text-black/40 mt-2">Larger page-specific UI blocks — hero banners, feature grids, pricing tables.</p>
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-5 py-4 border-b border-zinc-900/8">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-zinc-900/5 border border-zinc-900/8 text-xs font-mono font-semibold text-zinc-900">sections/</span>
+              <p class="text-xs text-zinc-900/40 mt-2">Larger page-specific UI blocks — hero banners, feature grids, pricing tables.</p>
             </div>
             <div class="p-5">
-              <pre class="bg-black text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>sections/
+              <pre class="bg-zinc-900 text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>sections/
 ├── hero-banner/
 ├── feature-grid/
 ├── pricing-table/
 └── testimonials/</code></pre>
             </div>
           </div>
-          <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-            <div class="px-5 py-4 border-b border-black/8">
-              <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-black/5 border border-black/8 text-xs font-mono font-semibold text-black">shared/</span>
-              <p class="text-xs text-black/40 mt-2">Small generic components reused across multiple pages.</p>
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-5 py-4 border-b border-zinc-900/8">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-zinc-900/5 border border-zinc-900/8 text-xs font-mono font-semibold text-zinc-900">shared/</span>
+              <p class="text-xs text-zinc-900/40 mt-2">Small generic components reused across multiple pages.</p>
             </div>
             <div class="p-5">
-              <pre class="bg-black text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>shared/
+              <pre class="bg-zinc-900 text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>shared/
 ├── toast/
 ├── confirm-modal/
 ├── loading-spinner/
@@ -288,42 +288,42 @@
           </div>
         </div>
 
-        <div class="flex items-start gap-3 bg-black/[0.03] border border-black/8 rounded-xl px-4 py-3.5">
-          <svg class="w-4 h-4 text-black/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
           </svg>
-          <p class="text-xs text-black/60"><strong class="font-semibold text-black">Sections vs Shared:</strong> Sections are larger, page-specific blocks. Shared components are smaller, generic pieces (buttons, modals, inputs) reused everywhere.</p>
+          <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Sections vs Shared:</strong> Sections are larger, page-specific blocks. Shared components are smaller, generic pieces (buttons, modals, inputs) reused everywhere.</p>
         </div>
       </section>
 
       <section *ngIf="activeSection === 'toast'" class="space-y-8">
-        <div class="pb-6 border-b border-black/8">
-          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-black/30">Service</span>
-          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-black mb-2">Toast Notifications</h2>
-          <p class="text-black/50 text-base">Simple, non-blocking alerts that appear at the top of the screen.</p>
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Service</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Toast Notifications</h2>
+          <p class="text-zinc-900/50 text-base">Simple, non-blocking alerts that appear at the top of the screen.</p>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Available Methods</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Available Methods</h3>
           </div>
           <div class="p-6 space-y-3">
-            <div *ngFor="let method of toastMethods" class="flex items-start gap-3 pb-3 border-b border-black/5 last:border-0 last:pb-0">
-              <span class="w-1.5 h-1.5 rounded-full bg-black flex-shrink-0 mt-2"></span>
+            <div *ngFor="let method of toastMethods" class="flex items-start gap-3 pb-3 border-b border-zinc-900/5 last:border-0 last:pb-0">
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-900 flex-shrink-0 mt-2"></span>
               <div class="flex-1 min-w-0">
-                <code class="text-xs font-mono px-2 py-1 rounded-lg border border-black/8 bg-black/[0.03] text-black">{{ method.call }}</code>
-                <p class="text-xs text-black/50 mt-1.5">{{ method.desc }}</p>
+                <code class="text-xs font-mono px-2 py-1 rounded-lg border border-zinc-900/8 bg-zinc-900/[0.03] text-zinc-900">{{ method.call }}</code>
+                <p class="text-xs text-zinc-900/50 mt-1.5">{{ method.desc }}</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Example Usage</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Example Usage</h3>
           </div>
           <div class="p-6">
-            <pre class="bg-black text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import &#123; ToastService &#125; from './core/services/toast.service';
+            <pre class="bg-zinc-900 text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import &#123; ToastService &#125; from './core/services/toast.service';
 
 export class MyComponent &#123;
   constructor(private toastService: ToastService) &#123;&#125;
@@ -339,40 +339,40 @@ export class MyComponent &#123;
           </div>
         </div>
 
-        <div class="flex items-start gap-3 bg-black/[0.03] border border-black/8 rounded-xl px-4 py-3.5">
-          <svg class="w-4 h-4 text-black/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
           </svg>
-          <p class="text-xs text-black/60"><strong class="font-semibold text-black">Tip:</strong> Toasts automatically disappear after 3 seconds and are perfect for quick feedback after user actions.</p>
+          <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Tip:</strong> Toasts automatically disappear after 3 seconds and are perfect for quick feedback after user actions.</p>
         </div>
       </section>
 
       <section *ngIf="activeSection === 'confirm'" class="space-y-8">
-        <div class="pb-6 border-b border-black/8">
-          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-black/30">Service</span>
-          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-black mb-2">Confirmation Modal</h2>
-          <p class="text-black/50 text-base">Blocking dialogs for important user confirmations.</p>
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Service</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Confirmation Modal</h2>
+          <p class="text-zinc-900/50 text-base">Blocking dialogs for important user confirmations.</p>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Modal Types</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Modal Types</h3>
           </div>
-          <div class="divide-y divide-black/5">
+          <div class="divide-y divide-zinc-900/5">
             <div *ngFor="let type of confirmTypes" class="flex items-center gap-4 px-6 py-4">
-              <span class="w-2 h-2 rounded-full bg-black flex-shrink-0"></span>
-              <code class="text-sm font-mono font-semibold text-black">{{ type.name }}</code>
-              <p class="text-xs text-black/50">{{ type.desc }}</p>
+              <span class="w-2 h-2 rounded-full bg-zinc-900 flex-shrink-0"></span>
+              <code class="text-sm font-mono font-semibold text-zinc-900">{{ type.name }}</code>
+              <p class="text-xs text-zinc-900/50">{{ type.desc }}</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Example Usage</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Example Usage</h3>
           </div>
           <div class="p-6">
-            <pre class="bg-black text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import &#123; ConfirmService &#125; from './core/services/confirm.service';
+            <pre class="bg-zinc-900 text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import &#123; ConfirmService &#125; from './core/services/confirm.service';
 
 export class MyComponent &#123;
   constructor(private confirmService: ConfirmService) &#123;&#125;
@@ -394,39 +394,39 @@ export class MyComponent &#123;
           </div>
         </div>
 
-        <div class="flex items-start gap-3 bg-black/[0.03] border border-black/8 rounded-xl px-4 py-3.5">
-          <svg class="w-4 h-4 text-black/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
           </svg>
-          <p class="text-xs text-black/60"><strong class="font-semibold text-black">Note:</strong> The <code class="font-mono bg-black/5 px-1 rounded">confirm()</code> method returns a Promise that resolves to <code class="font-mono bg-black/5 px-1 rounded">true</code> if confirmed, <code class="font-mono bg-black/5 px-1 rounded">false</code> if cancelled.</p>
+          <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Note:</strong> The <code class="font-mono bg-zinc-900/5 px-1 rounded">confirm()</code> method returns a Promise that resolves to <code class="font-mono bg-zinc-900/5 px-1 rounded">true</code> if confirmed, <code class="font-mono bg-zinc-900/5 px-1 rounded">false</code> if cancelled.</p>
         </div>
       </section>
 
       <section *ngIf="activeSection === 'aos'" class="space-y-8">
-        <div class="pb-6 border-b border-black/8">
-          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-black/30">Library</span>
-          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-black mb-2">AOS Animations</h2>
-          <p class="text-black/50 text-base">Scroll-triggered animations using the Animate On Scroll library.</p>
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Library</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">AOS Animations</h2>
+          <p class="text-zinc-900/50 text-base">Scroll-triggered animations using the Animate On Scroll library.</p>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Available Animations</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Available Animations</h3>
           </div>
           <div class="p-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div *ngFor="let anim of aosAnimations" class="border border-black/8 rounded-xl p-3.5 hover:border-black/20 hover:bg-black/[0.02] transition-colors">
-              <code class="text-xs font-mono text-black bg-black/5 px-2 py-1 rounded-lg border border-black/8">{{ anim.name }}</code>
-              <p class="text-xs text-black/50 mt-2">{{ anim.desc }}</p>
+            <div *ngFor="let anim of aosAnimations" class="border border-zinc-900/8 rounded-xl p-3.5 hover:border-zinc-900/20 hover:bg-zinc-900/[0.02] transition-colors">
+              <code class="text-xs font-mono text-zinc-900 bg-zinc-900/5 px-2 py-1 rounded-lg border border-zinc-900/8">{{ anim.name }}</code>
+              <p class="text-xs text-zinc-900/50 mt-2">{{ anim.desc }}</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Usage in Templates</h3>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Usage in Templates</h3>
           </div>
           <div class="p-6">
-            <pre class="bg-black text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>&lt;div data-aos="fade-up"&gt;
+            <pre class="bg-zinc-900 text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>&lt;div data-aos="fade-up"&gt;
   Animates on scroll
 &lt;/div&gt;
 
@@ -442,13 +442,13 @@ export class MyComponent &#123;
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Global Configuration</h3>
-            <p class="text-sm text-black/40 mt-0.5">Initialized in <code class="bg-black/5 px-1.5 py-0.5 rounded font-mono text-xs">app.ts</code> with these defaults.</p>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Global Configuration</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Initialized in <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">app.ts</code> with these defaults.</p>
           </div>
           <div class="p-6">
-            <pre class="bg-black text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import AOS from 'aos';
+            <pre class="bg-zinc-900 text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import AOS from 'aos';
 
 AOS.init(&#123;
   duration: 600,      // Animation duration in ms
@@ -458,13 +458,13 @@ AOS.init(&#123;
           </div>
         </div>
 
-        <div class="bg-white rounded-2xl border border-black/8 overflow-hidden">
-          <div class="px-6 py-5 border-b border-black/8">
-            <h3 class="text-base font-bold text-black">Dynamic Content</h3>
-            <p class="text-sm text-black/40 mt-0.5">Refreshing AOS after <code class="bg-black/5 px-1.5 py-0.5 rounded font-mono text-xs">*ngIf</code> toggles.</p>
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Dynamic Content</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Refreshing AOS after <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">*ngIf</code> toggles.</p>
           </div>
           <div class="p-6">
-            <pre class="bg-black text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import AOS from 'aos';
+            <pre class="bg-zinc-900 text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>import AOS from 'aos';
 
 toggleContent() &#123;
   this.showContent = !this.showContent;
@@ -473,11 +473,11 @@ toggleContent() &#123;
           </div>
         </div>
 
-        <div class="flex items-start gap-3 bg-black/[0.03] border border-black/8 rounded-xl px-4 py-3.5">
-          <svg class="w-4 h-4 text-black/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
           </svg>
-          <p class="text-xs text-black/60"><strong class="font-semibold text-black">Tip:</strong> Use staggered <code class="bg-black/5 px-1.5 py-0.5 rounded font-mono text-xs">data-aos-delay</code> values (100, 200, 300) on sibling elements to create a cascading entrance effect.</p>
+          <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Tip:</strong> Use staggered <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">data-aos-delay</code> values (100, 200, 300) on sibling elements to create a cascading entrance effect.</p>
         </div>
       </section>
 
