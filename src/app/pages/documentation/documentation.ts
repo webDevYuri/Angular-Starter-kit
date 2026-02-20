@@ -28,16 +28,16 @@ export class DocumentationComponent implements AfterViewInit {
   ];
 
   installSteps = [
-    { title: 'Clone the repository',           desc: '',                                                   code: `git clone https://github.com/webDevYuri/Angular-Starter-kit.git\ncd Angular-Starter-kit`, note: '' },
-    { title: 'Install dependencies',           desc: '',                                                   code: `npm install`,                                                                              note: '' },
-    { title: 'Configure environment variables', desc: 'Copy the example file and update with your local values.', code: `cp src/environments/environment.ts.example src/environments/environment.ts`,      note: '' },
-    { title: 'Start the development server',   desc: '',                                                   code: `npm start`,                                                                               note: 'Open http://localhost:4200 in your browser.' }
+    { title: 'Clone the repository',            desc: '',                                                        code: `git clone https://github.com/webDevYuri/Angular-Starter-kit.git\ncd Angular-Starter-kit`, note: '' },
+    { title: 'Install dependencies',            desc: '',                                                        code: `npm install`,                                                                              note: '' },
+    { title: 'Configure environment variables', desc: 'Copy the example file and update with your local values.', code: `cp src/environments/environment.ts.example src/environments/environment.ts`,             note: '' },
+    { title: 'Start the development server',    desc: '',                                                        code: `npm start`,                                                                               note: 'Open http://localhost:4200 in your browser.' }
   ];
 
   npmScripts = [
-    { cmd: 'npm start',      desc: 'Run the development server on port 4200', color: 'bg-emerald-50 border-emerald-200 text-emerald-700' },
-    { cmd: 'npm test',       desc: 'Run unit tests with Karma',               color: 'bg-gray-100 border-gray-300 text-gray-700' },
-    { cmd: 'npm run build',  desc: 'Build for production output',             color: 'bg-gray-100 border-gray-300 text-gray-700' }
+    { cmd: 'npm start',     desc: 'Run the development server on port 4200' },
+    { cmd: 'npm test',      desc: 'Run unit tests with Karma' },
+    { cmd: 'npm run build', desc: 'Build for production output' }
   ];
 
   nextSteps = [
@@ -47,25 +47,25 @@ export class DocumentationComponent implements AfterViewInit {
   ];
 
   coreFolders = [
-    { path: 'core/services/',     accent: 'border-purple-300', desc: 'Singleton services provided at the root level. Handle global state, API communication, and cross-cutting concerns.',          code: `core/services/\n├── toast.service.ts       # Global toast notifications\n├── confirm.service.ts     # Confirmation modal dialogs\n├── auth.service.ts        # Authentication & token management\n├── api.service.ts         # Base HTTP client wrapper\n└── storage.service.ts     # LocalStorage/SessionStorage helper` },
-    { path: 'core/data/',         accent: 'border-pink-300',   desc: 'Data sources that handle API calls for specific resources. Each file maps to a backend endpoint or resource.',              code: `core/data/\n├── user.data.ts           # GET/POST/PUT /api/users\n├── product.data.ts        # GET/POST/PUT /api/products\n└── order.data.ts          # GET/POST /api/orders` },
-    { path: 'core/guards/',       accent: 'border-amber-300',  desc: 'Route guards that protect routes based on conditions like authentication status or user roles.',                              code: `core/guards/\n├── auth.guard.ts          # Redirect to login if unauthenticated\n└── role.guard.ts          # Check user role before granting access` },
-    { path: 'core/interceptors/', accent: 'border-rose-300',   desc: 'HTTP interceptors that modify requests/responses globally — attaching auth tokens or handling errors.',                     code: `core/interceptors/\n├── auth.interceptor.ts    # Attach Bearer token to requests\n└── error.interceptor.ts   # Catch HTTP errors, show toast` },
-    { path: 'core/models/',       accent: 'border-violet-300', desc: 'TypeScript interfaces and types that define the shape of your data across the app.',                                         code: `core/models/\n├── user.model.ts          # interface User { id, name, email }\n├── product.model.ts       # interface Product { id, title, price }\n└── api-response.model.ts  # interface ApiResponse<T> { data, message }` },
-    { path: 'core/pipes/',        accent: 'border-teal-300',   desc: 'Custom Angular pipes for transforming data in templates.',                                                                    code: `core/pipes/\n├── time-ago.pipe.ts       # "5 minutes ago" from a Date\n├── truncate.pipe.ts       # Shorten long text with "..."\n└── currency-ph.pipe.ts    # Format to Philippine Peso` }
+    { path: 'core/services/',     desc: 'Singleton services provided at the root level. Handle global state, API communication, and cross-cutting concerns.',          code: `core/services/\n├── toast.service.ts       # Global toast notifications\n├── confirm.service.ts     # Confirmation modal dialogs\n├── auth.service.ts        # Authentication & token management\n├── api.service.ts         # Base HTTP client wrapper\n└── storage.service.ts     # LocalStorage/SessionStorage helper` },
+    { path: 'core/data/',         desc: 'Data sources that handle API calls for specific resources. Each file maps to a backend endpoint or resource.',              code: `core/data/\n├── user.data.ts           # GET/POST/PUT /api/users\n├── product.data.ts        # GET/POST/PUT /api/products\n└── order.data.ts          # GET/POST /api/orders` },
+    { path: 'core/guards/',       desc: 'Route guards that protect routes based on conditions like authentication status or user roles.',                              code: `core/guards/\n├── auth.guard.ts          # Redirect to login if unauthenticated\n└── role.guard.ts          # Check user role before granting access` },
+    { path: 'core/interceptors/', desc: 'HTTP interceptors that modify requests/responses globally — attaching auth tokens or handling errors.',                     code: `core/interceptors/\n├── auth.interceptor.ts    # Attach Bearer token to requests\n└── error.interceptor.ts   # Catch HTTP errors, show toast` },
+    { path: 'core/models/',       desc: 'TypeScript interfaces and types that define the shape of your data across the app.',                                         code: `core/models/\n├── user.model.ts          # interface User { id, name, email }\n├── product.model.ts       # interface Product { id, title, price }\n└── api-response.model.ts  # interface ApiResponse<T> { data, message }` },
+    { path: 'core/pipes/',        desc: 'Custom Angular pipes for transforming data in templates.',                                                                    code: `core/pipes/\n├── time-ago.pipe.ts       # "5 minutes ago" from a Date\n├── truncate.pipe.ts       # Shorten long text with "..."\n└── currency-ph.pipe.ts    # Format to Philippine Peso` }
   ];
 
   toastMethods = [
-    { call: 'toastService.success(message)', desc: 'Display a success notification', dot: 'bg-emerald-500', badge: 'bg-emerald-50 border-emerald-200 text-emerald-700' },
-    { call: 'toastService.error(message)',   desc: 'Display an error notification',  dot: 'bg-rose-500',    badge: 'bg-rose-50 border-rose-200 text-rose-700' },
-    { call: 'toastService.warning(message)', desc: 'Display a warning notification', dot: 'bg-amber-500',   badge: 'bg-amber-50 border-amber-200 text-amber-700' },
-    { call: 'toastService.info(message)',    desc: 'Display an info notification',   dot: 'bg-sky-500',     badge: 'bg-sky-50 border-sky-200 text-sky-700' }
+    { call: 'toastService.success(message)', desc: 'Display a success notification' },
+    { call: 'toastService.error(message)',   desc: 'Display an error notification' },
+    { call: 'toastService.warning(message)', desc: 'Display a warning notification' },
+    { call: 'toastService.info(message)',    desc: 'Display an info notification' }
   ];
 
   confirmTypes = [
-    { name: 'danger',  dot: 'bg-rose-500',  textClass: 'text-rose-600',  desc: 'Red — for destructive actions like delete' },
-    { name: 'warning', dot: 'bg-amber-500', textClass: 'text-amber-600', desc: 'Amber — for important cautionary actions' },
-    { name: 'info',    dot: 'bg-sky-500',   textClass: 'text-sky-600',   desc: 'Blue — for informational confirmations' }
+    { name: 'danger',  desc: 'Red — for destructive actions like delete' },
+    { name: 'warning', desc: 'Amber — for important cautionary actions' },
+    { name: 'info',    desc: 'Blue — for informational confirmations' }
   ];
 
   aosAnimations = [

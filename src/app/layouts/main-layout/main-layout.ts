@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { SidebarService } from '../../core/services/sidebar.service';
-import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterModule, NgClass],
+  imports: [RouterModule],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.css'
 })
