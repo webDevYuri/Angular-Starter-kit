@@ -1,5 +1,44 @@
 @import 'aos/dist/aos.css';
+@import 'flatpickr/dist/flatpickr.min.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.flatpickr-calendar {
+  border: 1px solid rgb(228 228 231);
+  border-radius: 0.75rem;
+  box-shadow: 0 16px 40px rgb(24 24 27 / 0.16);
+  font-family: inherit;
+}
+
+.flatpickr-months .flatpickr-month {
+  color: rgb(24 24 27);
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months,
+.flatpickr-current-month input.cur-year {
+  font-weight: 600;
+}
+
+.flatpickr-weekday {
+  color: rgb(113 113 122);
+  font-weight: 600;
+}
+
+.flatpickr-day {
+  border-radius: 0.5rem;
+  color: rgb(39 39 42);
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+  background: rgb(24 24 27);
+  border-color: rgb(24 24 27);
+  color: white;
+}
+
+.flatpickr-day:hover {
+  background: rgb(244 244 245);
+}

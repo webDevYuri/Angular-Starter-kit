@@ -9,3 +9,12 @@ code {
 pre {
   line-height: 1.5;
 }
+
+main p {
+  overflow-wrap: anywhere;
+}
+
+main p code {
+  white-space: normal;
+  word-break: break-word;
+}

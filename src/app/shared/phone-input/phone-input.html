@@ -1,0 +1,120 @@
+<div class="space-y-1.5" [formGroup]="formGroup">
+  <label [attr.for]="localInputId" class="text-xs font-semibold text-zinc-700">{{ label }}</label>
+
+  <div [ngClass]="getContainerClasses()">
+    <div class="relative border-r border-zinc-200 bg-zinc-50 shrink-0">
+      <button
+        #countryTriggerButton
+        type="button"
+        class="h-full min-w-[154px] px-3 py-2 flex items-center gap-2 text-left"
+        [attr.aria-label]="'Selected country ' + selectedCountryLabel + '. Activate to change country.'"
+        role="combobox"
+        aria-haspopup="listbox"
+        [attr.aria-expanded]="isCountryMenuOpen"
+        [attr.aria-controls]="countryListboxId"
+        [attr.aria-describedby]="countryResultsHintId"
+        (click)="toggleCountryMenu()"
+        (keydown)="onCountryTriggerKeydown($event)"
+      >
+        <span class="inline-flex h-4 w-6 overflow-hidden rounded-sm border border-zinc-200 shadow-sm" aria-hidden="true">
+          <img
+            class="h-full w-full object-cover"
+            [src]="getFlagUrl(selectedFormat.COUNTRY_CODE)"
+            [alt]="''"
+            loading="lazy"
+            decoding="async"
+          />
+        </span>
+        <span class="text-sm font-medium text-zinc-700">{{ selectedFormat.DIAL_CODE }}</span>
+        <svg class="w-4 h-4 text-zinc-500 ml-auto" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+        </svg>
+      </button>
+
+      <div
+        *ngIf="isCountryMenuOpen"
+        class="absolute top-full left-0 z-40 mt-1 w-[290px] rounded-xl border border-zinc-200 bg-white shadow-xl overflow-hidden"
+      >
+        <div class="p-2 border-b border-zinc-200">
+          <label class="sr-only" [attr.for]="countrySearchInputId">Search country</label>
+          <div class="relative">
+            <button
+              type="button"
+              class="absolute left-1.5 top-1/2 -translate-y-1/2 p-1 rounded-md text-zinc-400 hover:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-zinc-200"
+              aria-label="Focus country search"
+              (click)="focusCountrySearch()"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-4.35-4.35m1.1-4.65a5.75 5.75 0 1 1-11.5 0 5.75 5.75 0 0 1 11.5 0Z" />
+              </svg>
+            </button>
+            <input
+              #countrySearchInput
+              [id]="countrySearchInputId"
+              [attr.name]="countrySearchInputName"
+              type="text"
+              class="w-full rounded-lg border border-zinc-300 pl-10 pr-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-zinc-200 focus:border-zinc-900"
+              placeholder="Search country or code..."
+              autocomplete="off"
+              [value]="countrySearchTerm"
+              (input)="onCountrySearchInput($event)"
+              (keydown)="onCountrySearchKeydown($event)"
+            />
+          </div>
+        </div>
+
+        <p [id]="countryResultsHintId" class="px-3 pt-2 text-[11px] text-zinc-500" aria-live="polite">
+          {{ filteredCountries.length }} country option{{ filteredCountries.length === 1 ? '' : 's' }} available.
+        </p>
+
+        <ul
+          [id]="countryListboxId"
+          role="listbox"
+          class="max-h-60 overflow-y-auto py-1"
+          [attr.aria-label]="'Country list'"
+        >
+          <li *ngFor="let item of filteredCountries; trackBy: trackByCountryCode">
+            <button
+              type="button"
+              role="option"
+              [id]="getCountryOptionId(item.COUNTRY_CODE)"
+              class="w-full px-3 py-2 flex items-center gap-2 text-left text-sm hover:bg-zinc-50"
+              [attr.aria-selected]="item.COUNTRY_CODE === selectedFormat.COUNTRY_CODE"
+              [class.bg-zinc-100]="item.COUNTRY_CODE === selectedFormat.COUNTRY_CODE"
+              (click)="selectCountry(item)"
+            >
+              <span class="inline-flex h-4 w-6 overflow-hidden rounded-sm border border-zinc-200 shadow-sm mt-0.5" aria-hidden="true">
+                <img
+                  class="h-full w-full object-cover"
+                  [src]="getFlagUrl(item.COUNTRY_CODE)"
+                  [alt]="''"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="text-zinc-700 truncate flex-1">{{ item.COUNTRY_NAME }}</span>
+              <span class="font-semibold text-zinc-600 min-w-[28px]">{{ item.COUNTRY_CODE }}</span>
+              <span class="text-zinc-500 min-w-[40px] text-right">{{ item.DIAL_CODE }}</span>
+            </button>
+          </li>
+          <li *ngIf="filteredCountries.length === 0" class="px-3 py-2 text-sm text-zinc-500">
+            No country found.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <input
+      [id]="localInputId"
+      [attr.name]="localInputName"
+      type="tel"
+      [formControlName]="localControlName"
+      class="w-full px-3 py-2 text-sm text-zinc-900 bg-transparent focus:outline-none"
+      [placeholder]="selectedPlaceholder"
+      autocomplete="tel-national"
+      (input)="onLocalInput($event)"
+    />
+  </div>
+
+  <p class="text-[11px] text-zinc-500">{{ selectedFormat.COUNTRY_NAME }} - {{ hintPrefix }} {{ selectedHint }}</p>
+</div>

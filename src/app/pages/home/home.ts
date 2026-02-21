@@ -16,7 +16,7 @@ export class HomeComponent implements AfterViewInit {
     private confirmService: ConfirmService
   ) {}
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     setTimeout(() => {
       AOS.init({
         duration: 600,
@@ -28,19 +28,19 @@ export class HomeComponent implements AfterViewInit {
     }, 100);
   }
 
-  showSuccess() {
+  showSuccess(): void {
     this.toastService.success('Operation completed successfully!');
   }
 
-  showError() {
+  showError(): void {
     this.toastService.error('Something went wrong. Please try again.');
   }
 
-  showWarning() {
+  showWarning(): void {
     this.toastService.warning('Please review your changes carefully.');
   }
 
-  showInfo() {
+  showInfo(): void {
     this.toastService.info('This is an informational message.');
   }
 

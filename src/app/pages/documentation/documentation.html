@@ -29,11 +29,13 @@
     <p class="text-[10px] font-semibold tracking-widest text-zinc-900/30 uppercase px-3 mb-3">Documentation</p>
     <button
       *ngFor="let section of sections"
+      type="button"
       (click)="setActiveSection(section.id)"
       class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-sm font-medium"
       [ngClass]="activeSection === section.id
         ? 'bg-zinc-900 text-white'
         : 'text-zinc-900/50 hover:text-zinc-900 hover:bg-zinc-900/5'"
+      [attr.aria-current]="activeSection === section.id ? 'page' : null"
     >
       <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="section.icon" />
@@ -76,11 +78,13 @@
       <nav class="space-y-0.5">
         <button
           *ngFor="let section of sections"
+          type="button"
           (click)="setActiveSection(section.id)"
           class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all text-left text-sm font-medium"
           [ngClass]="activeSection === section.id
             ? 'bg-zinc-900 text-white'
             : 'text-zinc-900/50 hover:text-zinc-900 hover:bg-zinc-900/5'"
+          [attr.aria-current]="activeSection === section.id ? 'page' : null"
         >
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="section.icon" />
@@ -101,10 +105,10 @@
     </div>
   </aside>
 
-  <main class="flex-1 overflow-y-auto md:ml-64">
-    <div class="max-w-3xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
+  <main class="flex-1 md:ml-64 overflow-x-hidden">
+    <div class="w-full max-w-3xl mx-auto px-4 sm:px-8 py-8 sm:py-14 space-y-14 sm:space-y-20">
 
-      <section *ngIf="activeSection === 'getting-started'" class="space-y-8">
+      <section [id]="getSectionElementId('getting-started')" class="space-y-8 scroll-mt-24">
         <div class="pb-6 border-b border-zinc-900/8">
           <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Quick Start</span>
           <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Getting Started</h2>
@@ -153,18 +157,18 @@
             <h3 class="text-base font-bold text-zinc-900">Next Steps</h3>
           </div>
           <div class="divide-y divide-zinc-900/5">
-            <div *ngFor="let step of nextSteps; let i = index" class="flex gap-4 px-6 py-4">
+            <div *ngFor="let step of nextSteps; let i = index" class="flex gap-3 sm:gap-4 px-4 sm:px-6 py-4">
               <span class="inline-flex items-center justify-center w-6 h-6 rounded-full bg-zinc-900 text-white text-[11px] font-bold flex-shrink-0 mt-0.5">{{ getStepLabel(i) }}</span>
-              <div>
+              <div class="min-w-0">
                 <p class="text-sm font-semibold text-zinc-900">{{ step.title }}</p>
-                <p class="text-xs text-zinc-900/50 mt-0.5" [innerHTML]="step.desc"></p>
+                <p class="text-xs text-zinc-900/50 mt-0.5 break-words" [innerHTML]="step.desc"></p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'folder'" class="space-y-8">
+      <section [id]="getSectionElementId('folder')" class="space-y-8 scroll-mt-24">
         <div class="pb-6 border-b border-zinc-900/8">
           <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Architecture</span>
           <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Folder Structure</h2>
@@ -178,26 +182,26 @@
           </div>
           <div class="p-6">
             <pre class="bg-zinc-900 text-white/80 p-5 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>src/app/
-├── core/               # Core functionality
-│   ├── constants/     # App-wide constants & config
-│   ├── data/          # API data sources
-│   ├── directives/    # Custom attribute directives
-│   ├── enums/         # Named constant sets
-│   ├── guards/        # Route guards
-│   ├── interceptors/  # HTTP interceptors
-│   ├── interfaces/    # TypeScript interfaces
-│   ├── models/        # Classes with behavior
-│   ├── pipes/         # Custom pipes
-│   ├── services/      # Singleton services
-│   ├── utils/         # Pure helper functions
-│   └── validators/    # Custom form validators
-├── layouts/           # Layout components
-├── pages/             # Page-level components
-├── sections/          # Reusable section components
-├── shared/            # Shared components & utilities
-├── app.routes.ts      # Route definitions
-├── app.ts             # Root component
-└── app.html           # Root template</code></pre>
+|-- core/               # Core functionality
+|   |-- constants/      # App-wide constants & config
+|   |-- data/           # Static/shared data sources
+|   |-- directives/     # Custom attribute directives
+|   |-- enums/          # Named constant sets
+|   |-- guards/         # Route guards
+|   |-- interceptors/   # HTTP interceptors
+|   |-- interfaces/     # TypeScript interfaces
+|   |-- models/         # Classes with behavior
+|   |-- pipes/          # Custom pipes
+|   |-- services/       # Singleton services
+|   |-- utils/          # Pure helper functions
+|   \-- validators/     # Custom form validators
+|-- layouts/            # Layout components
+|-- pages/              # Page-level components
+|-- sections/           # Reusable section components
+|-- shared/             # Shared components & utilities
+|-- app.routes.ts       # Route definitions
+|-- app.ts              # Root component
+\-- app.html            # Root template</code></pre>
           </div>
         </div>
 
@@ -224,12 +228,12 @@
           <div class="p-6 space-y-4">
             <p class="text-sm text-zinc-900/60">Layout components wrap pages with shared UI elements like headers, sidebars, and footers. Pages are rendered inside the layout's <code class="bg-zinc-900/5 px-2 py-1 rounded font-mono text-xs">&lt;router-outlet /&gt;</code>.</p>
             <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>layouts/
-├── main-layout/           # Header + content area
-│   ├── main-layout.ts
-│   ├── main-layout.html
-│   └── main-layout.css
-├── admin-layout/          # Sidebar + topbar for admin
-└── auth-layout/           # Centered card layout for auth</code></pre>
+|-- main-layout/           # Header + content area
+|   |-- main-layout.ts
+|   |-- main-layout.html
+|   \-- main-layout.css
+|-- admin-layout/          # Sidebar + topbar for admin
+\-- auth-layout/           # Centered card layout for auth</code></pre>
             <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3">
               <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
@@ -247,19 +251,19 @@
           <div class="p-6 space-y-4">
             <p class="text-sm text-zinc-900/60">Page-level components that map directly to routes. Each page gets its own folder with its component, template, and styles.</p>
             <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>pages/
-├── home/                  # Landing page (/)
-│   ├── home.ts
-│   ├── home.html
-│   └── home.css
-├── documentation/         # Documentation (/documentation)
-├── dashboard/             # Dashboard (/dashboard)
-├── login/                 # Login (/login)
-└── not-found/             # 404 page (/**)</code></pre>
+|-- home/                  # Landing page (/)
+|   |-- home.ts
+|   |-- home.html
+|   \-- home.css
+|-- documentation/         # Documentation (/documentation)
+|-- dashboard/             # Dashboard (/dashboard)
+|-- login/                 # Login (/login)
+\-- not-found/             # 404 page (/**)</code></pre>
             <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3">
               <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
               </svg>
-              <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Convention:</strong> One page = one route. Keep pages thin — move complex UI blocks into <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">sections/</code> and reusable pieces into <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">shared/</code>.</p>
+              <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Convention:</strong> One page = one route. Keep pages thin - move complex UI blocks into <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">sections/</code> and reusable pieces into <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">shared/</code>.</p>
             </div>
           </div>
         </div>
@@ -268,14 +272,14 @@
           <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
             <div class="px-5 py-4 border-b border-zinc-900/8">
               <span class="inline-flex items-center px-2.5 py-1 rounded-lg bg-zinc-900/5 border border-zinc-900/8 text-xs font-mono font-semibold text-zinc-900">sections/</span>
-              <p class="text-xs text-zinc-900/40 mt-2">Larger page-specific UI blocks — hero banners, feature grids, pricing tables.</p>
+              <p class="text-xs text-zinc-900/40 mt-2">Larger page-specific UI blocks - hero banners, feature grids, pricing tables.</p>
             </div>
             <div class="p-5">
               <pre class="bg-zinc-900 text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>sections/
-├── hero-banner/
-├── feature-grid/
-├── pricing-table/
-└── testimonials/</code></pre>
+|-- hero-banner/
+|-- feature-grid/
+|-- pricing-table/
+\-- testimonials/</code></pre>
             </div>
           </div>
           <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
@@ -285,11 +289,10 @@
             </div>
             <div class="p-5">
               <pre class="bg-zinc-900 text-white/80 p-3 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>shared/
-├── toast/
-├── confirm-modal/
-├── loading-spinner/
-├── data-table/
-└── search-input/</code></pre>
+|-- toast/
+|-- confirm-modal/
+|-- phone-input/
+\-- date-picker/</code></pre>
             </div>
           </div>
         </div>
@@ -302,7 +305,310 @@
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'toast'" class="space-y-8">
+      <section [id]="getSectionElementId('cleanup')" class="space-y-8 scroll-mt-24">
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Maintenance</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Template Cleanup</h2>
+          <p class="text-zinc-900/50 text-base">Use this when you want to keep the folder architecture but remove starter-only template files.</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Cleanup Rules</h3>
+          </div>
+          <div class="p-6 space-y-2.5">
+            <div *ngFor="let rule of cleanupPrinciples" class="flex items-start gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-900 mt-2 flex-shrink-0"></span>
+              <p class="text-xs text-zinc-900/60">{{ rule }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-6 py-5 border-b border-zinc-900/8">
+              <h3 class="text-base font-bold text-zinc-900">One-Line Safe Cleanup</h3>
+              <p class="text-sm text-zinc-900/40 mt-0.5">PowerShell: removes placeholder sample files only.</p>
+            </div>
+            <div class="p-6">
+              <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ cleanupSafeCommand }}</code></pre>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-6 py-5 border-b border-zinc-900/8">
+              <h3 class="text-base font-bold text-zinc-900">Optional Docs Removal</h3>
+              <p class="text-sm text-zinc-900/40 mt-0.5">Run only if you do not want the in-app documentation page.</p>
+            </div>
+            <div class="p-6">
+              <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ cleanupOptionalDocsCommand }}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Route Baseline Example</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">After cleanup, keep a minimal routes file that compiles.</p>
+          </div>
+          <div class="p-6">
+            <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ cleanupRouteExample }}</code></pre>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Post-Cleanup Checklist</h3>
+          </div>
+          <div class="p-6 space-y-2.5">
+            <div *ngFor="let item of cleanupChecklist" class="flex items-start gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-zinc-900 mt-2 flex-shrink-0"></span>
+              <p class="text-xs text-zinc-900/60">{{ item }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section [id]="getSectionElementId('constants')" class="space-y-8 scroll-mt-24">
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Core Layer</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Core Constants</h2>
+          <p class="text-zinc-900/50 text-base">Centralized immutable values for API, routing, auth, validation, UI tokens, and feature flags.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-6 py-5 border-b border-zinc-900/8">
+              <h3 class="text-base font-bold text-zinc-900">Standards</h3>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div *ngFor="let rule of constantPrinciples" class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-zinc-900 mt-2 flex-shrink-0"></span>
+                <p class="text-xs text-zinc-900/60">{{ rule }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-6 py-5 border-b border-zinc-900/8">
+              <h3 class="text-base font-bold text-zinc-900">Barrel Import</h3>
+              <p class="text-sm text-zinc-900/40 mt-0.5">Use <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">src/app/core/constants/index.ts</code>.</p>
+            </div>
+            <div class="p-6">
+              <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ constantsImportExample }}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Toast + Confirm Wiring</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Use the validation feedback service to route form errors into shared UI components.</p>
+          </div>
+          <div class="p-6">
+            <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ validatorUiFeedbackExample }}</code></pre>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Reusable Phone Input</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Use <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">app-phone-input</code> for a grouped phone field with searchable countries, real flag icons, short codes, and dial codes.</p>
+          </div>
+          <div class="p-6">
+            <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ phoneInputComponentExample }}</code></pre>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Reusable Date Picker</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Use <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">app-date-picker</code> for a modern calendar input powered by Flatpickr.</p>
+          </div>
+          <div class="p-6">
+            <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ datePickerComponentExample }}</code></pre>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Constant Files</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Production-ready constants available in <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">core/constants/</code>.</p>
+          </div>
+          <div class="divide-y divide-zinc-900/5">
+            <div *ngFor="let item of constantFiles" class="px-6 py-4">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <code class="text-xs font-mono px-2 py-1 rounded-lg border border-zinc-900/10 bg-zinc-900/[0.03] text-zinc-900">{{ item.file }}</code>
+                <code class="text-[11px] font-mono px-2 py-1 rounded-lg border border-zinc-900/10 bg-zinc-900/[0.02] text-zinc-900/80">{{ item.exportName }}</code>
+              </div>
+              <p class="text-xs text-zinc-900/50 mt-2">{{ item.purpose }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Boundary:</strong> Keep static patterns and tokens in constants, then place string/date/number transformation logic in <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">core/pipes/</code>.</p>
+        </div>
+      </section>
+
+      <section [id]="getSectionElementId('validators')" class="space-y-8 scroll-mt-24">
+        <div class="pb-6 border-b border-zinc-900/8">
+          <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Core Layer</span>
+          <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Form Validators</h2>
+          <p class="text-zinc-900/50 text-base">Reusable validation functions for control-level, group-level, and async form validation flows.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-5">
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-6 py-5 border-b border-zinc-900/8">
+              <h3 class="text-base font-bold text-zinc-900">Standards</h3>
+            </div>
+            <div class="p-6 space-y-2.5">
+              <div *ngFor="let rule of validatorPrinciples" class="flex items-start gap-3">
+                <span class="w-1.5 h-1.5 rounded-full bg-zinc-900 mt-2 flex-shrink-0"></span>
+                <p class="text-xs text-zinc-900/60">{{ rule }}</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+            <div class="px-6 py-5 border-b border-zinc-900/8">
+              <h3 class="text-base font-bold text-zinc-900">Usage Example</h3>
+              <p class="text-sm text-zinc-900/40 mt-0.5">Import from <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">src/app/core/validators</code>.</p>
+            </div>
+            <div class="p-6">
+              <pre class="bg-zinc-900 text-white/80 p-4 rounded-xl text-xs overflow-x-auto leading-relaxed"><code>{{ validatorsImportExample }}</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Validation Playground</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Try real inputs and test validator, toast, and confirm-modal behavior.</p>
+          </div>
+          <form [formGroup]="validatorPlaygroundForm" (ngSubmit)="submitValidatorPlayground()" class="p-6 space-y-5">
+            <div
+              *ngIf="validatorPlaygroundSubmitted && getValidatorPlaygroundSummaryMessages().length > 0"
+              class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3"
+            >
+              <p class="text-xs font-semibold text-rose-700 mb-2">Please fix the following:</p>
+              <div class="space-y-1">
+                <p *ngFor="let message of getValidatorPlaygroundSummaryMessages()" class="text-xs text-rose-700">
+                  - {{ message }}
+                </p>
+              </div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="space-y-1.5">
+                <label for="validator-playground-first-name" class="text-xs font-semibold text-zinc-700">First Name</label>
+                <input id="validator-playground-first-name" name="firstName" type="text" formControlName="firstName" [ngClass]="getValidatorPlaygroundInputClasses('firstName')" placeholder="Juan" autocomplete="given-name" />
+                <p *ngFor="let message of getValidatorPlaygroundFieldMessages('firstName')" class="text-xs text-rose-600">{{ message }}</p>
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="validator-playground-username" class="text-xs font-semibold text-zinc-700">Username</label>
+                <input id="validator-playground-username" name="username" type="text" formControlName="username" [ngClass]="getValidatorPlaygroundInputClasses('username')" placeholder="juan.delacruz" autocomplete="username" />
+                <p *ngFor="let message of getValidatorPlaygroundFieldMessages('username')" class="text-xs text-rose-600">{{ message }}</p>
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="validator-playground-email" class="text-xs font-semibold text-zinc-700">Email</label>
+                <input id="validator-playground-email" name="email" type="email" formControlName="email" [ngClass]="getValidatorPlaygroundInputClasses('email')" placeholder="juan@example.com" autocomplete="email" />
+                <p *ngFor="let message of getValidatorPlaygroundFieldMessages('email')" class="text-xs text-rose-600">{{ message }}</p>
+              </div>
+
+              <div class="space-y-1.5">
+                <app-phone-input
+                  [formGroup]="validatorPlaygroundForm"
+                  countryControlName="phoneCountry"
+                  localControlName="phoneLocal"
+                  label="Phone Number"
+                />
+                <p *ngFor="let message of getValidatorPlaygroundFieldMessages('phoneCountry')" class="text-xs text-rose-600">{{ message }}</p>
+                <p *ngFor="let message of getValidatorPlaygroundFieldMessages('phoneLocal')" class="text-xs text-rose-600">{{ message }}</p>
+              </div>
+
+              <div class="space-y-1.5">
+                <app-date-picker
+                  [formGroup]="validatorPlaygroundForm"
+                  controlName="dateOfBirth"
+                  label="Date of Birth"
+                  placeholder="Select your birth date"
+                  hint="Use the calendar or type YYYY-MM-DD."
+                  [initialViewDate]="'2000-01-01'"
+                />
+                <p *ngFor="let message of getValidatorPlaygroundFieldMessages('dateOfBirth')" class="text-xs text-rose-600">{{ message }}</p>
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="validator-playground-password" class="text-xs font-semibold text-zinc-700">Password</label>
+                <input id="validator-playground-password" name="password" type="password" formControlName="password" [ngClass]="getValidatorPlaygroundInputClasses('password')" placeholder="StrongPassword@123" autocomplete="new-password" />
+                <p *ngFor="let message of getValidatorPlaygroundFieldMessages('password')" class="text-xs text-rose-600">{{ message }}</p>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <label for="validator-playground-confirm-password" class="text-xs font-semibold text-zinc-700">Confirm Password</label>
+              <input id="validator-playground-confirm-password" name="confirmPassword" type="password" formControlName="confirmPassword" [ngClass]="getValidatorPlaygroundInputClasses('confirmPassword')" placeholder="Repeat your password" autocomplete="new-password" />
+              <p *ngFor="let message of getValidatorPlaygroundFieldMessages('confirmPassword')" class="text-xs text-rose-600">{{ message }}</p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-1">
+              <button
+                type="submit"
+                class="px-4 py-2 rounded-lg text-xs font-semibold bg-zinc-900 text-white hover:bg-zinc-800 transition-colors"
+              >
+                Validate & Submit
+              </button>
+              <button
+                type="button"
+                (click)="tryContinueWithInvalidValidatorPlayground()"
+                class="px-4 py-2 rounded-lg text-xs font-semibold border border-zinc-300 text-zinc-700 hover:bg-zinc-50 transition-colors"
+              >
+                Try Continue (Confirm)
+              </button>
+              <button
+                type="button"
+                (click)="resetValidatorPlayground()"
+                class="px-4 py-2 rounded-lg text-xs font-semibold border border-zinc-300 text-zinc-700 hover:bg-zinc-50 transition-colors"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-zinc-900/8 overflow-hidden">
+          <div class="px-6 py-5 border-b border-zinc-900/8">
+            <h3 class="text-base font-bold text-zinc-900">Validator Files</h3>
+            <p class="text-sm text-zinc-900/40 mt-0.5">Available in <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">core/validators/</code>.</p>
+          </div>
+          <div class="divide-y divide-zinc-900/5">
+            <div *ngFor="let item of validatorFiles" class="px-6 py-4">
+              <div class="flex flex-wrap items-center gap-2.5">
+                <code class="text-xs font-mono px-2 py-1 rounded-lg border border-zinc-900/10 bg-zinc-900/[0.03] text-zinc-900">{{ item.file }}</code>
+                <span class="text-[11px] font-mono px-2 py-1 rounded-lg border border-zinc-900/10 bg-zinc-900/[0.02] text-zinc-900/80">{{ item.kind }}</span>
+                <code class="text-[11px] font-mono px-2 py-1 rounded-lg border border-zinc-900/10 bg-zinc-900/[0.02] text-zinc-900/80">{{ item.exportName }}</code>
+              </div>
+              <p class="text-xs text-zinc-900/50 mt-2">{{ item.purpose }}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 bg-zinc-900/[0.03] border border-zinc-900/8 rounded-xl px-4 py-3.5">
+          <svg class="w-4 h-4 text-zinc-900/40 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+          </svg>
+          <p class="text-xs text-zinc-900/60"><strong class="font-semibold text-zinc-900">Boundary:</strong> Validators enforce constraints and return error keys. Transform display output in <code class="bg-zinc-900/5 px-1.5 py-0.5 rounded font-mono text-xs">core/pipes/</code> and call APIs in services/data sources.</p>
+        </div>
+      </section>
+
+      <section [id]="getSectionElementId('toast')" class="space-y-8 scroll-mt-24">
         <div class="pb-6 border-b border-zinc-900/8">
           <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Service</span>
           <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Toast Notifications</h2>
@@ -353,7 +659,7 @@ export class MyComponent &#123;
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'confirm'" class="space-y-8">
+      <section [id]="getSectionElementId('confirm')" class="space-y-8 scroll-mt-24">
         <div class="pb-6 border-b border-zinc-900/8">
           <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Service</span>
           <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">Confirmation Modal</h2>
@@ -408,7 +714,7 @@ export class MyComponent &#123;
         </div>
       </section>
 
-      <section *ngIf="activeSection === 'aos'" class="space-y-8">
+      <section [id]="getSectionElementId('aos')" class="space-y-8 scroll-mt-24">
         <div class="pb-6 border-b border-zinc-900/8">
           <span class="inline-block text-[10px] font-semibold tracking-widest uppercase mb-3 text-zinc-900/30">Library</span>
           <h2 class="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900 mb-2">AOS Animations</h2>
@@ -490,3 +796,5 @@ toggleContent() &#123;
     </div>
   </main>
 </div>
+
+
